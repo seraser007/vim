@@ -1,0 +1,272 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.OleDb;
+
+namespace VIQExtractor
+{
+    public partial class FilterForm : Form
+    {
+        DataSet DS;
+        OleDbConnection connection;
+
+        public FilterForm(OleDbConnection mainConnection, DataSet mainDS, Font mainFont, Icon mainIcon)
+        {
+            connection = mainConnection;
+            DS = mainDS;
+            this.Font = mainFont;
+            this.Icon = mainIcon;
+
+            InitializeComponent();
+
+            DataTable vessels = DS.Tables["VESSELS_LIST"];
+
+            valueVessel.DataSource = vessels;
+            valueVessel.DisplayMember = "VESSEL_NAME";
+            valueVessel.ValueMember = "VESSEL_IMO";
+
+
+            DataTable inspectors = DS.Tables["INSPECTORS_LIST"];
+
+            valueInspector.DataSource = inspectors;
+            valueInspector.DisplayMember = "INSPECTOR";
+            valueInspector.ValueMember = "INSPECTOR_ID";
+            valueInspector.Text = "";
+
+            DataTable reports = DS.Tables["REPORTS_LIST"];
+
+            valueReportNumber.DataSource = reports;
+            valueReportNumber.DisplayMember = "REPORT_CODE";
+            valueReportNumber.Text = "";
+
+            DataTable ports = DS.Tables["PORTS_LIST"];
+
+            valuePort.DataSource = ports;
+            valuePort.DisplayMember = "INSPECTION_PORT";
+            valuePort.Text = "";
+
+            DataTable companies = DS.Tables["COMPANIES_LIST"];
+
+            valueCompany.DataSource = companies;
+            valueCompany.DisplayMember = "COMPANY";
+            valueCompany.Text = "";
+
+            DataTable offices = DS.Tables["OFFICES_LIST"];
+
+            valueOffice.DataSource = offices;
+            valueOffice.DisplayMember = "DOC";
+            valueOffice.Text = "";
+
+            DataTable classes = DS.Tables["CLASSES_LIST"];
+
+            valueHullClass.DataSource = classes;
+            valueHullClass.DisplayMember = "HULL_CLASS";
+            valueHullClass.Text = "";
+
+            fillMasters();
+            fillChiefEngineers();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!labelVessel.Text.Contains("*"))
+            {
+                conditionVessel.Text = "";
+                valueVessel.Text = "";
+            }
+
+            if (!labelInspector.Text.Contains("*"))
+            {
+                conditionInspector.Text = "";
+                valueInspector.Text = "";
+            }
+
+            if (!labelReportNumber.Text.Contains("*"))
+            {
+                conditionReportNumber.Text = "";
+                valueReportNumber.Text = "";
+            }
+
+
+            conditionQuestionNumber.Text = "";
+            conditionObservation.Text = "";
+            conditionInspectorComments.Text = "";
+            conditionTechnicalComments.Text = "";
+            conditionOperatorComments.Text = "";
+            conditionQuestionGUID.Text = "";
+
+            if (!labelDate.Text.Contains("*"))
+            {
+                conditionDate.Text = "";
+                valueDate.Value = DateTime.Today;
+                valueDate2.Value = DateTime.Today;
+            }
+
+            if (!labelCompany.Text.Contains("*"))
+            {
+                conditionCompany.Text = "";
+                valueCompany.Text = "";
+            }
+
+            if (!labelPort.Text.Contains("*"))
+            {
+                conditionPort.Text = "";
+                valuePort.Text = "";
+            }
+
+            if (!labelOffice.Text.Contains("*"))
+            {
+                conditionOffice.Text = "";
+                valueOffice.Text = "";
+            }
+
+            if (!labelHullClass.Text.Contains("*"))
+            {
+                conditionHullClass.Text = "";
+                valueHullClass.Text = "";
+            }
+
+            valueQuestionNumber.Text = "";
+            valueObservation.Text = "";
+            valueInspectorComments.Text = "";
+            valueTechnicalComments.Text = "";
+            valueOperatorComments.Text = "";
+            valueQuestionGUID.Text = "";
+
+            if (!labelMaster.Text.Contains("*"))
+            {
+                conditionMaster.Text = "";
+                valueMaster.Text = "";
+            }
+
+            if (!labelChiefEngneer.Text.Contains("*"))
+            {
+                conditionChiefEngineer.Text = "";
+                valueChiefEngineer.Text = "";
+            }
+
+        }
+
+        private void conditionDate_TextChanged(object sender, EventArgs e)
+        {
+            valueDate2.Visible = conditionDate.Text.Contains("Between");
+        }
+
+        private void labelVessel_TextChanged(object sender, EventArgs e)
+        {
+            conditionVessel.Enabled = !labelVessel.Text.Contains("*");
+            valueVessel.Enabled = !labelVessel.Text.Contains("*");
+        }
+
+        private void labelInspector_TextChanged(object sender, EventArgs e)
+        {
+            conditionInspector.Enabled = !labelInspector.Text.Contains("*");
+            valueInspector.Enabled = !labelInspector.Text.Contains("*");
+        }
+
+        private void labelReportNumber_TextChanged(object sender, EventArgs e)
+        {
+            conditionReportNumber.Enabled = !labelReportNumber.Text.Contains("*");
+            valueReportNumber.Enabled = !labelReportNumber.Text.Contains("*");
+        }
+
+        private void labelDate_TextChanged(object sender, EventArgs e)
+        {
+            conditionDate.Enabled = !labelDate.Text.Contains("*");
+            valueDate.Enabled = !labelDate.Text.Contains("*");
+            valueDate2.Enabled = !labelDate.Text.Contains("*");
+        }
+
+        private void labelCompany_TextChanged(object sender, EventArgs e)
+        {
+            conditionCompany.Enabled = !labelCompany.Text.Contains("*");
+            valueCompany.Enabled = !labelCompany.Text.Contains("*");
+        }
+
+        private void labelPort_TextChanged(object sender, EventArgs e)
+        {
+            conditionPort.Enabled = ! labelPort.Text.Contains("*");
+            valuePort.Enabled = !labelPort.Text.Contains("*");
+        }
+
+        private void labelOffice_TextChanged(object sender, EventArgs e)
+        {
+            conditionOffice.Enabled = !labelOffice.Text.Contains("*");
+            valueOffice.Enabled = !labelOffice.Text.Contains("*");
+        }
+
+        private void labelHullClass_TextChanged(object sender, EventArgs e)
+        {
+            conditionHullClass.Enabled = !labelHullClass.Text.Contains("*");
+            valueHullClass.Enabled = !labelHullClass.Text.Contains("*");
+        }
+
+        private void fillMasters()
+        {
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            cmd.CommandText =
+                "select * from \n" +
+                "(select MASTER_ID, MASTER_NAME, MASTER_NOTES, PERSONAL_ID \n" +
+                "from MASTERS \n" +
+                "union \n" +
+                "select Null as MASTER_ID, '' as MASTER_NAME, '' as MASTER_NOTES, '' as PERSONAL_ID \n" +
+                "from Fonts) \n" +
+                "order by MASTER_NAME";
+
+            OleDbDataAdapter mastersListAdapter = new OleDbDataAdapter(cmd);
+
+            if (DS.Tables.Contains("MASTERS_LIST"))
+                DS.Tables["MASTERS_LIST"].Clear();
+
+            mastersListAdapter.Fill(DS, "MASTERS_LIST");
+
+            valueMaster.DataSource = DS.Tables["MASTERS_LIST"];
+            valueMaster.DisplayMember = "MASTER_NAME";
+            valueMaster.ValueMember = "MASTER_ID";
+
+        }
+
+        private void fillChiefEngineers()
+        {
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            cmd.CommandText =
+                "select * from \n" +
+                "(select CHENG_ID, CHENG_NAME, CHENG_NOTES, PERSONAL_ID \n" +
+                "from CHIEF_ENGINEERS \n" +
+                "union \n" +
+                "select Null as CHENG_ID, '' as CHENG_NAME, '' as CHENG_NOTES, '' as PERSONAL_ID \n" +
+                "from Fonts) \n" +
+                "order by CHENG_NAME";
+
+            OleDbDataAdapter chengListAdapter = new OleDbDataAdapter(cmd);
+
+            if (DS.Tables.Contains("CHENG_LIST"))
+                DS.Tables["CHENG_LIST"].Clear();
+
+            chengListAdapter.Fill(DS, "CHENG_LIST");
+
+            valueChiefEngineer.DataSource = DS.Tables["CHENG_LIST"];
+            valueChiefEngineer.DisplayMember = "CHENG_NAME";
+            valueChiefEngineer.ValueMember = "CHENG_ID";
+
+        }
+
+        private void labelMaster_TextChanged(object sender, EventArgs e)
+        {
+            conditionMaster.Enabled = !labelMaster.Text.Contains("*");
+            valueMaster.Enabled = !labelMaster.Text.Contains("*");
+        }
+
+        private void labelChiefEngneer_TextChanged(object sender, EventArgs e)
+        {
+            conditionChiefEngineer.Enabled = !labelChiefEngneer.Text.Contains("*");
+            valueChiefEngineer.Enabled = !labelChiefEngneer.Text.Contains("*");
+        }
+    }
+}

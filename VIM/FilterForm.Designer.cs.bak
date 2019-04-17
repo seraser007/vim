@@ -1,0 +1,1644 @@
+﻿namespace VIQExtractor
+{
+    partial class FilterForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FilterForm));
+            this.valueOperatorComments = new System.Windows.Forms.TextBox();
+            this.valueTechnicalComments = new System.Windows.Forms.TextBox();
+            this.valueInspectorComments = new System.Windows.Forms.TextBox();
+            this.valueObservation = new System.Windows.Forms.TextBox();
+            this.valueQuestionNumber = new System.Windows.Forms.TextBox();
+            this.valueReportNumber = new System.Windows.Forms.ComboBox();
+            this.valueVessel = new System.Windows.Forms.ComboBox();
+            this.panel22 = new System.Windows.Forms.Panel();
+            this.label20 = new System.Windows.Forms.Label();
+            this.conditionOperatorComments = new System.Windows.Forms.ComboBox();
+            this.conditionTechnicalComments = new System.Windows.Forms.ComboBox();
+            this.conditionInspectorComments = new System.Windows.Forms.ComboBox();
+            this.conditionObservation = new System.Windows.Forms.ComboBox();
+            this.conditionQuestionNumber = new System.Windows.Forms.ComboBox();
+            this.conditionReportNumber = new System.Windows.Forms.ComboBox();
+            this.conditionInspector = new System.Windows.Forms.ComboBox();
+            this.conditionVessel = new System.Windows.Forms.ComboBox();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.showOperatorComments = new System.Windows.Forms.CheckBox();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.showTechnicalComments = new System.Windows.Forms.CheckBox();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.showInspectorComments = new System.Windows.Forms.CheckBox();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.showObservation = new System.Windows.Forms.CheckBox();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.showQuestionNumber = new System.Windows.Forms.CheckBox();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.showReportNumber = new System.Windows.Forms.CheckBox();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.showInspector = new System.Windows.Forms.CheckBox();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.labelQuestionGUID = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.labelTechnicalComments = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.labelVessel = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.labelOperatorComments = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.labelObservation = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.labelQuestionNumber = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.labelInspectorComments = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.showVessel = new System.Windows.Forms.CheckBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.labelReportNumber = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.showQuestionGUID = new System.Windows.Forms.CheckBox();
+            this.conditionQuestionGUID = new System.Windows.Forms.ComboBox();
+            this.valueQuestionGUID = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.labelInspector = new System.Windows.Forms.Label();
+            this.valueInspector = new SuggestComboBox20.SuggestComboBox20();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.valueHullClass = new System.Windows.Forms.ComboBox();
+            this.valueOffice = new System.Windows.Forms.ComboBox();
+            this.valuePort = new System.Windows.Forms.ComboBox();
+            this.valueCompany = new System.Windows.Forms.ComboBox();
+            this.valueDate2 = new System.Windows.Forms.DateTimePicker();
+            this.valueDate = new System.Windows.Forms.DateTimePicker();
+            this.conditionHullClass = new System.Windows.Forms.ComboBox();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.labelHullClass = new System.Windows.Forms.Label();
+            this.conditionOffice = new System.Windows.Forms.ComboBox();
+            this.panel24 = new System.Windows.Forms.Panel();
+            this.labelOffice = new System.Windows.Forms.Label();
+            this.conditionPort = new System.Windows.Forms.ComboBox();
+            this.panel25 = new System.Windows.Forms.Panel();
+            this.labelPort = new System.Windows.Forms.Label();
+            this.conditionCompany = new System.Windows.Forms.ComboBox();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.labelCompany = new System.Windows.Forms.Label();
+            this.conditionDate = new System.Windows.Forms.ComboBox();
+            this.panel27 = new System.Windows.Forms.Panel();
+            this.labelDate = new System.Windows.Forms.Label();
+            this.panel28 = new System.Windows.Forms.Panel();
+            this.showDate = new System.Windows.Forms.CheckBox();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.showCompany = new System.Windows.Forms.CheckBox();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.showPort = new System.Windows.Forms.CheckBox();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.showOffice = new System.Windows.Forms.CheckBox();
+            this.panel32 = new System.Windows.Forms.Panel();
+            this.showHullClass = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.labelMaster = new System.Windows.Forms.Label();
+            this.conditionMaster = new System.Windows.Forms.ComboBox();
+            this.valueMaster = new SuggestComboBox20.SuggestComboBox20();
+            this.panel34 = new System.Windows.Forms.Panel();
+            this.showMaster = new System.Windows.Forms.CheckBox();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.showChiefEngineer = new System.Windows.Forms.CheckBox();
+            this.panel36 = new System.Windows.Forms.Panel();
+            this.labelChiefEngneer = new System.Windows.Forms.Label();
+            this.conditionChiefEngineer = new System.Windows.Forms.ComboBox();
+            this.valueChiefEngineer = new SuggestComboBox20.SuggestComboBox20();
+            this.panel22.SuspendLayout();
+            this.panel21.SuspendLayout();
+            this.panel20.SuspendLayout();
+            this.panel19.SuspendLayout();
+            this.panel18.SuspendLayout();
+            this.panel17.SuspendLayout();
+            this.panel16.SuspendLayout();
+            this.panel15.SuspendLayout();
+            this.panel14.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel23.SuspendLayout();
+            this.panel24.SuspendLayout();
+            this.panel25.SuspendLayout();
+            this.panel26.SuspendLayout();
+            this.panel27.SuspendLayout();
+            this.panel28.SuspendLayout();
+            this.panel29.SuspendLayout();
+            this.panel30.SuspendLayout();
+            this.panel31.SuspendLayout();
+            this.panel32.SuspendLayout();
+            this.panel33.SuspendLayout();
+            this.panel34.SuspendLayout();
+            this.panel35.SuspendLayout();
+            this.panel36.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // valueOperatorComments
+            // 
+            this.valueOperatorComments.Location = new System.Drawing.Point(298, 182);
+            this.valueOperatorComments.Name = "valueOperatorComments";
+            this.valueOperatorComments.Size = new System.Drawing.Size(190, 21);
+            this.valueOperatorComments.TabIndex = 71;
+            // 
+            // valueTechnicalComments
+            // 
+            this.valueTechnicalComments.Location = new System.Drawing.Point(298, 160);
+            this.valueTechnicalComments.Name = "valueTechnicalComments";
+            this.valueTechnicalComments.Size = new System.Drawing.Size(190, 21);
+            this.valueTechnicalComments.TabIndex = 70;
+            // 
+            // valueInspectorComments
+            // 
+            this.valueInspectorComments.Location = new System.Drawing.Point(298, 138);
+            this.valueInspectorComments.Name = "valueInspectorComments";
+            this.valueInspectorComments.Size = new System.Drawing.Size(190, 21);
+            this.valueInspectorComments.TabIndex = 69;
+            // 
+            // valueObservation
+            // 
+            this.valueObservation.Location = new System.Drawing.Point(298, 116);
+            this.valueObservation.Name = "valueObservation";
+            this.valueObservation.Size = new System.Drawing.Size(190, 21);
+            this.valueObservation.TabIndex = 68;
+            // 
+            // valueQuestionNumber
+            // 
+            this.valueQuestionNumber.Location = new System.Drawing.Point(298, 95);
+            this.valueQuestionNumber.Name = "valueQuestionNumber";
+            this.valueQuestionNumber.Size = new System.Drawing.Size(190, 21);
+            this.valueQuestionNumber.TabIndex = 67;
+            // 
+            // valueReportNumber
+            // 
+            this.valueReportNumber.FormattingEnabled = true;
+            this.valueReportNumber.Location = new System.Drawing.Point(298, 73);
+            this.valueReportNumber.Name = "valueReportNumber";
+            this.valueReportNumber.Size = new System.Drawing.Size(190, 21);
+            this.valueReportNumber.TabIndex = 66;
+            // 
+            // valueVessel
+            // 
+            this.valueVessel.FormattingEnabled = true;
+            this.valueVessel.Location = new System.Drawing.Point(298, 29);
+            this.valueVessel.Name = "valueVessel";
+            this.valueVessel.Size = new System.Drawing.Size(190, 21);
+            this.valueVessel.TabIndex = 64;
+            // 
+            // panel22
+            // 
+            this.panel22.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel22.Controls.Add(this.label20);
+            this.panel22.Location = new System.Drawing.Point(298, 4);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(190, 23);
+            this.panel22.TabIndex = 63;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label20.Location = new System.Drawing.Point(4, 2);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(38, 13);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "Value";
+            // 
+            // conditionOperatorComments
+            // 
+            this.conditionOperatorComments.FormattingEnabled = true;
+            this.conditionOperatorComments.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on",
+            "Is Empty",
+            "Is Not Empty"});
+            this.conditionOperatorComments.Location = new System.Drawing.Point(171, 183);
+            this.conditionOperatorComments.Name = "conditionOperatorComments";
+            this.conditionOperatorComments.Size = new System.Drawing.Size(125, 21);
+            this.conditionOperatorComments.TabIndex = 62;
+            // 
+            // conditionTechnicalComments
+            // 
+            this.conditionTechnicalComments.FormattingEnabled = true;
+            this.conditionTechnicalComments.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on",
+            "Is Empty",
+            "Is Not Empty"});
+            this.conditionTechnicalComments.Location = new System.Drawing.Point(171, 161);
+            this.conditionTechnicalComments.Name = "conditionTechnicalComments";
+            this.conditionTechnicalComments.Size = new System.Drawing.Size(125, 21);
+            this.conditionTechnicalComments.TabIndex = 61;
+            // 
+            // conditionInspectorComments
+            // 
+            this.conditionInspectorComments.FormattingEnabled = true;
+            this.conditionInspectorComments.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on",
+            "Is Empty",
+            "Is Not Empty"});
+            this.conditionInspectorComments.Location = new System.Drawing.Point(171, 139);
+            this.conditionInspectorComments.Name = "conditionInspectorComments";
+            this.conditionInspectorComments.Size = new System.Drawing.Size(125, 21);
+            this.conditionInspectorComments.TabIndex = 60;
+            // 
+            // conditionObservation
+            // 
+            this.conditionObservation.FormattingEnabled = true;
+            this.conditionObservation.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on",
+            "Is Empty",
+            "Is Not Empty"});
+            this.conditionObservation.Location = new System.Drawing.Point(171, 117);
+            this.conditionObservation.Name = "conditionObservation";
+            this.conditionObservation.Size = new System.Drawing.Size(125, 21);
+            this.conditionObservation.TabIndex = 59;
+            // 
+            // conditionQuestionNumber
+            // 
+            this.conditionQuestionNumber.FormattingEnabled = true;
+            this.conditionQuestionNumber.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionQuestionNumber.Location = new System.Drawing.Point(171, 95);
+            this.conditionQuestionNumber.Name = "conditionQuestionNumber";
+            this.conditionQuestionNumber.Size = new System.Drawing.Size(125, 21);
+            this.conditionQuestionNumber.TabIndex = 58;
+            // 
+            // conditionReportNumber
+            // 
+            this.conditionReportNumber.FormattingEnabled = true;
+            this.conditionReportNumber.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionReportNumber.Location = new System.Drawing.Point(171, 73);
+            this.conditionReportNumber.Name = "conditionReportNumber";
+            this.conditionReportNumber.Size = new System.Drawing.Size(125, 21);
+            this.conditionReportNumber.TabIndex = 57;
+            // 
+            // conditionInspector
+            // 
+            this.conditionInspector.FormattingEnabled = true;
+            this.conditionInspector.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionInspector.Location = new System.Drawing.Point(171, 51);
+            this.conditionInspector.Name = "conditionInspector";
+            this.conditionInspector.Size = new System.Drawing.Size(125, 21);
+            this.conditionInspector.TabIndex = 56;
+            // 
+            // conditionVessel
+            // 
+            this.conditionVessel.FormattingEnabled = true;
+            this.conditionVessel.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionVessel.Location = new System.Drawing.Point(171, 29);
+            this.conditionVessel.Name = "conditionVessel";
+            this.conditionVessel.Size = new System.Drawing.Size(125, 21);
+            this.conditionVessel.TabIndex = 55;
+            // 
+            // panel21
+            // 
+            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel21.Controls.Add(this.label19);
+            this.panel21.Location = new System.Drawing.Point(170, 4);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(125, 23);
+            this.panel21.TabIndex = 54;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label19.Location = new System.Drawing.Point(-1, 2);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(60, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Condition";
+            // 
+            // panel20
+            // 
+            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel20.Controls.Add(this.showOperatorComments);
+            this.panel20.Location = new System.Drawing.Point(129, 184);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(38, 20);
+            this.panel20.TabIndex = 53;
+            // 
+            // showOperatorComments
+            // 
+            this.showOperatorComments.AutoSize = true;
+            this.showOperatorComments.Location = new System.Drawing.Point(11, 2);
+            this.showOperatorComments.Name = "showOperatorComments";
+            this.showOperatorComments.Size = new System.Drawing.Size(15, 14);
+            this.showOperatorComments.TabIndex = 0;
+            this.showOperatorComments.UseVisualStyleBackColor = true;
+            // 
+            // panel19
+            // 
+            this.panel19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel19.Controls.Add(this.showTechnicalComments);
+            this.panel19.Location = new System.Drawing.Point(129, 162);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(38, 20);
+            this.panel19.TabIndex = 52;
+            // 
+            // showTechnicalComments
+            // 
+            this.showTechnicalComments.AutoSize = true;
+            this.showTechnicalComments.Location = new System.Drawing.Point(11, 2);
+            this.showTechnicalComments.Name = "showTechnicalComments";
+            this.showTechnicalComments.Size = new System.Drawing.Size(15, 14);
+            this.showTechnicalComments.TabIndex = 0;
+            this.showTechnicalComments.UseVisualStyleBackColor = true;
+            // 
+            // panel18
+            // 
+            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel18.Controls.Add(this.showInspectorComments);
+            this.panel18.Location = new System.Drawing.Point(129, 140);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(38, 20);
+            this.panel18.TabIndex = 51;
+            // 
+            // showInspectorComments
+            // 
+            this.showInspectorComments.AutoSize = true;
+            this.showInspectorComments.Location = new System.Drawing.Point(11, 2);
+            this.showInspectorComments.Name = "showInspectorComments";
+            this.showInspectorComments.Size = new System.Drawing.Size(15, 14);
+            this.showInspectorComments.TabIndex = 0;
+            this.showInspectorComments.UseVisualStyleBackColor = true;
+            // 
+            // panel17
+            // 
+            this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel17.Controls.Add(this.showObservation);
+            this.panel17.Location = new System.Drawing.Point(129, 118);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(38, 20);
+            this.panel17.TabIndex = 50;
+            // 
+            // showObservation
+            // 
+            this.showObservation.AutoSize = true;
+            this.showObservation.Location = new System.Drawing.Point(11, 2);
+            this.showObservation.Name = "showObservation";
+            this.showObservation.Size = new System.Drawing.Size(15, 14);
+            this.showObservation.TabIndex = 0;
+            this.showObservation.UseVisualStyleBackColor = true;
+            // 
+            // panel16
+            // 
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel16.Controls.Add(this.showQuestionNumber);
+            this.panel16.Location = new System.Drawing.Point(129, 96);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(38, 20);
+            this.panel16.TabIndex = 49;
+            // 
+            // showQuestionNumber
+            // 
+            this.showQuestionNumber.AutoSize = true;
+            this.showQuestionNumber.Location = new System.Drawing.Point(11, 2);
+            this.showQuestionNumber.Name = "showQuestionNumber";
+            this.showQuestionNumber.Size = new System.Drawing.Size(15, 14);
+            this.showQuestionNumber.TabIndex = 0;
+            this.showQuestionNumber.UseVisualStyleBackColor = true;
+            // 
+            // panel15
+            // 
+            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel15.Controls.Add(this.showReportNumber);
+            this.panel15.Location = new System.Drawing.Point(129, 74);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(38, 20);
+            this.panel15.TabIndex = 48;
+            // 
+            // showReportNumber
+            // 
+            this.showReportNumber.AutoSize = true;
+            this.showReportNumber.Location = new System.Drawing.Point(11, 2);
+            this.showReportNumber.Name = "showReportNumber";
+            this.showReportNumber.Size = new System.Drawing.Size(15, 14);
+            this.showReportNumber.TabIndex = 0;
+            this.showReportNumber.UseVisualStyleBackColor = true;
+            // 
+            // panel14
+            // 
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel14.Controls.Add(this.showInspector);
+            this.panel14.Location = new System.Drawing.Point(129, 52);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(38, 20);
+            this.panel14.TabIndex = 47;
+            // 
+            // showInspector
+            // 
+            this.showInspector.AutoSize = true;
+            this.showInspector.Location = new System.Drawing.Point(11, 2);
+            this.showInspector.Name = "showInspector";
+            this.showInspector.Size = new System.Drawing.Size(15, 14);
+            this.showInspector.TabIndex = 0;
+            this.showInspector.UseVisualStyleBackColor = true;
+            // 
+            // panel13
+            // 
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel13.Controls.Add(this.labelQuestionGUID);
+            this.panel13.Location = new System.Drawing.Point(5, 205);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(120, 20);
+            this.panel13.TabIndex = 46;
+            // 
+            // labelQuestionGUID
+            // 
+            this.labelQuestionGUID.AutoSize = true;
+            this.labelQuestionGUID.Location = new System.Drawing.Point(4, 2);
+            this.labelQuestionGUID.Name = "labelQuestionGUID";
+            this.labelQuestionGUID.Size = new System.Drawing.Size(78, 13);
+            this.labelQuestionGUID.TabIndex = 0;
+            this.labelQuestionGUID.Text = "Question GUID";
+            // 
+            // panel12
+            // 
+            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel12.Controls.Add(this.labelTechnicalComments);
+            this.panel12.Location = new System.Drawing.Point(5, 161);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(120, 20);
+            this.panel12.TabIndex = 45;
+            // 
+            // labelTechnicalComments
+            // 
+            this.labelTechnicalComments.AutoSize = true;
+            this.labelTechnicalComments.Location = new System.Drawing.Point(4, 2);
+            this.labelTechnicalComments.Name = "labelTechnicalComments";
+            this.labelTechnicalComments.Size = new System.Drawing.Size(102, 13);
+            this.labelTechnicalComments.TabIndex = 0;
+            this.labelTechnicalComments.Text = "Technical comments";
+            // 
+            // panel11
+            // 
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Controls.Add(this.labelVessel);
+            this.panel11.Location = new System.Drawing.Point(5, 30);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(120, 20);
+            this.panel11.TabIndex = 44;
+            // 
+            // labelVessel
+            // 
+            this.labelVessel.AutoSize = true;
+            this.labelVessel.Location = new System.Drawing.Point(4, 2);
+            this.labelVessel.Name = "labelVessel";
+            this.labelVessel.Size = new System.Drawing.Size(37, 13);
+            this.labelVessel.TabIndex = 0;
+            this.labelVessel.Text = "Vessel";
+            this.labelVessel.TextChanged += new System.EventHandler(this.labelVessel_TextChanged);
+            // 
+            // panel10
+            // 
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Controls.Add(this.labelOperatorComments);
+            this.panel10.Location = new System.Drawing.Point(5, 183);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(120, 20);
+            this.panel10.TabIndex = 43;
+            // 
+            // labelOperatorComments
+            // 
+            this.labelOperatorComments.AutoSize = true;
+            this.labelOperatorComments.Location = new System.Drawing.Point(4, 2);
+            this.labelOperatorComments.Name = "labelOperatorComments";
+            this.labelOperatorComments.Size = new System.Drawing.Size(102, 13);
+            this.labelOperatorComments.TabIndex = 0;
+            this.labelOperatorComments.Text = "Operator comments";
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.labelObservation);
+            this.panel9.Location = new System.Drawing.Point(5, 117);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(120, 20);
+            this.panel9.TabIndex = 42;
+            // 
+            // labelObservation
+            // 
+            this.labelObservation.AutoSize = true;
+            this.labelObservation.Location = new System.Drawing.Point(4, 2);
+            this.labelObservation.Name = "labelObservation";
+            this.labelObservation.Size = new System.Drawing.Size(66, 13);
+            this.labelObservation.TabIndex = 0;
+            this.labelObservation.Text = "Observation";
+            // 
+            // panel8
+            // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.labelQuestionNumber);
+            this.panel8.Location = new System.Drawing.Point(5, 95);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(120, 20);
+            this.panel8.TabIndex = 41;
+            // 
+            // labelQuestionNumber
+            // 
+            this.labelQuestionNumber.AutoSize = true;
+            this.labelQuestionNumber.Location = new System.Drawing.Point(4, 2);
+            this.labelQuestionNumber.Name = "labelQuestionNumber";
+            this.labelQuestionNumber.Size = new System.Drawing.Size(89, 13);
+            this.labelQuestionNumber.TabIndex = 0;
+            this.labelQuestionNumber.Text = "Question number";
+            // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.labelInspectorComments);
+            this.panel7.Location = new System.Drawing.Point(5, 139);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(120, 20);
+            this.panel7.TabIndex = 40;
+            // 
+            // labelInspectorComments
+            // 
+            this.labelInspectorComments.AutoSize = true;
+            this.labelInspectorComments.Location = new System.Drawing.Point(4, 2);
+            this.labelInspectorComments.Name = "labelInspectorComments";
+            this.labelInspectorComments.Size = new System.Drawing.Size(104, 13);
+            this.labelInspectorComments.TabIndex = 0;
+            this.labelInspectorComments.Text = "Inspector comments";
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.showVessel);
+            this.panel6.Location = new System.Drawing.Point(129, 30);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(38, 20);
+            this.panel6.TabIndex = 39;
+            // 
+            // showVessel
+            // 
+            this.showVessel.AutoSize = true;
+            this.showVessel.Location = new System.Drawing.Point(11, 2);
+            this.showVessel.Name = "showVessel";
+            this.showVessel.Size = new System.Drawing.Size(15, 14);
+            this.showVessel.TabIndex = 0;
+            this.showVessel.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel5.Controls.Add(this.label11);
+            this.panel5.Location = new System.Drawing.Point(128, 3);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(39, 24);
+            this.panel5.TabIndex = 38;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.Location = new System.Drawing.Point(0, 3);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(37, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Show";
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.labelReportNumber);
+            this.panel4.Location = new System.Drawing.Point(5, 73);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(120, 20);
+            this.panel4.TabIndex = 37;
+            // 
+            // labelReportNumber
+            // 
+            this.labelReportNumber.AutoSize = true;
+            this.labelReportNumber.Location = new System.Drawing.Point(4, 2);
+            this.labelReportNumber.Name = "labelReportNumber";
+            this.labelReportNumber.Size = new System.Drawing.Size(79, 13);
+            this.labelReportNumber.TabIndex = 0;
+            this.labelReportNumber.Text = "Report number";
+            this.labelReportNumber.TextChanged += new System.EventHandler(this.labelReportNumber_TextChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.label9);
+            this.panel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.panel3.Location = new System.Drawing.Point(5, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(121, 25);
+            this.panel3.TabIndex = 36;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(33, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Field";
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button2.ImageIndex = 1;
+            this.button2.ImageList = this.imageList1;
+            this.button2.Location = new System.Drawing.Point(204, 415);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(85, 25);
+            this.button2.TabIndex = 73;
+            this.button2.Text = "Clear filter";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Magenta;
+            this.imageList1.Images.SetKeyName(0, "Ok-2.bmp");
+            this.imageList1.Images.SetKeyName(1, "filter-off.bmp");
+            this.imageList1.Images.SetKeyName(2, "Close_Box_Red.png");
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.ImageIndex = 0;
+            this.button1.ImageList = this.imageList1;
+            this.button1.Location = new System.Drawing.Point(295, 415);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 25);
+            this.button1.TabIndex = 72;
+            this.button1.Text = "Apply and close";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.showQuestionGUID);
+            this.panel1.Location = new System.Drawing.Point(129, 205);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(38, 20);
+            this.panel1.TabIndex = 74;
+            // 
+            // showQuestionGUID
+            // 
+            this.showQuestionGUID.AutoSize = true;
+            this.showQuestionGUID.Location = new System.Drawing.Point(11, 2);
+            this.showQuestionGUID.Name = "showQuestionGUID";
+            this.showQuestionGUID.Size = new System.Drawing.Size(15, 14);
+            this.showQuestionGUID.TabIndex = 0;
+            this.showQuestionGUID.UseVisualStyleBackColor = true;
+            // 
+            // conditionQuestionGUID
+            // 
+            this.conditionQuestionGUID.FormattingEnabled = true;
+            this.conditionQuestionGUID.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionQuestionGUID.Location = new System.Drawing.Point(171, 205);
+            this.conditionQuestionGUID.Name = "conditionQuestionGUID";
+            this.conditionQuestionGUID.Size = new System.Drawing.Size(125, 21);
+            this.conditionQuestionGUID.TabIndex = 75;
+            // 
+            // valueQuestionGUID
+            // 
+            this.valueQuestionGUID.Location = new System.Drawing.Point(298, 204);
+            this.valueQuestionGUID.Name = "valueQuestionGUID";
+            this.valueQuestionGUID.Size = new System.Drawing.Size(190, 21);
+            this.valueQuestionGUID.TabIndex = 76;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.labelInspector);
+            this.panel2.Location = new System.Drawing.Point(5, 52);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(120, 20);
+            this.panel2.TabIndex = 77;
+            // 
+            // labelInspector
+            // 
+            this.labelInspector.AutoSize = true;
+            this.labelInspector.Location = new System.Drawing.Point(4, 2);
+            this.labelInspector.Name = "labelInspector";
+            this.labelInspector.Size = new System.Drawing.Size(53, 13);
+            this.labelInspector.TabIndex = 0;
+            this.labelInspector.Text = "Inspector";
+            this.labelInspector.TextChanged += new System.EventHandler(this.labelInspector_TextChanged);
+            // 
+            // valueInspector
+            // 
+            this.valueInspector.FormattingEnabled = true;
+            this.valueInspector.Location = new System.Drawing.Point(298, 51);
+            this.valueInspector.Name = "valueInspector";
+            this.valueInspector.SearchRule = SuggestComboBox20.SuggestComboBox20.searchRules.cbsContains;
+            this.valueInspector.Size = new System.Drawing.Size(190, 21);
+            this.valueInspector.SuggestBoxHeight = 96;
+            this.valueInspector.TabIndex = 78;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(5, 419);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(155, 17);
+            this.checkBox1.TabIndex = 80;
+            this.checkBox1.Text = "Update grid on form closed";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button3.ImageIndex = 2;
+            this.button3.ImageList = this.imageList1;
+            this.button3.Location = new System.Drawing.Point(414, 415);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 25);
+            this.button3.TabIndex = 82;
+            this.button3.Text = "Close";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // valueHullClass
+            // 
+            this.valueHullClass.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.valueHullClass.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.valueHullClass.FormattingEnabled = true;
+            this.valueHullClass.Location = new System.Drawing.Point(298, 315);
+            this.valueHullClass.Name = "valueHullClass";
+            this.valueHullClass.Size = new System.Drawing.Size(190, 21);
+            this.valueHullClass.TabIndex = 119;
+            // 
+            // valueOffice
+            // 
+            this.valueOffice.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.valueOffice.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.valueOffice.FormattingEnabled = true;
+            this.valueOffice.Location = new System.Drawing.Point(298, 294);
+            this.valueOffice.Name = "valueOffice";
+            this.valueOffice.Size = new System.Drawing.Size(190, 21);
+            this.valueOffice.TabIndex = 118;
+            // 
+            // valuePort
+            // 
+            this.valuePort.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.valuePort.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.valuePort.BackColor = System.Drawing.SystemColors.Window;
+            this.valuePort.FormattingEnabled = true;
+            this.valuePort.Location = new System.Drawing.Point(298, 272);
+            this.valuePort.Name = "valuePort";
+            this.valuePort.Size = new System.Drawing.Size(190, 21);
+            this.valuePort.TabIndex = 117;
+            // 
+            // valueCompany
+            // 
+            this.valueCompany.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.valueCompany.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.valueCompany.FormattingEnabled = true;
+            this.valueCompany.Location = new System.Drawing.Point(298, 250);
+            this.valueCompany.Name = "valueCompany";
+            this.valueCompany.Size = new System.Drawing.Size(190, 21);
+            this.valueCompany.TabIndex = 116;
+            // 
+            // valueDate2
+            // 
+            this.valueDate2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.valueDate2.Location = new System.Drawing.Point(397, 227);
+            this.valueDate2.Name = "valueDate2";
+            this.valueDate2.Size = new System.Drawing.Size(91, 21);
+            this.valueDate2.TabIndex = 115;
+            this.valueDate2.Visible = false;
+            // 
+            // valueDate
+            // 
+            this.valueDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.valueDate.Location = new System.Drawing.Point(298, 228);
+            this.valueDate.Name = "valueDate";
+            this.valueDate.Size = new System.Drawing.Size(86, 21);
+            this.valueDate.TabIndex = 114;
+            // 
+            // conditionHullClass
+            // 
+            this.conditionHullClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.conditionHullClass.FormattingEnabled = true;
+            this.conditionHullClass.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionHullClass.Location = new System.Drawing.Point(171, 316);
+            this.conditionHullClass.Name = "conditionHullClass";
+            this.conditionHullClass.Size = new System.Drawing.Size(125, 21);
+            this.conditionHullClass.TabIndex = 113;
+            // 
+            // panel23
+            // 
+            this.panel23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel23.Controls.Add(this.labelHullClass);
+            this.panel23.Location = new System.Drawing.Point(5, 316);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(120, 20);
+            this.panel23.TabIndex = 112;
+            // 
+            // labelHullClass
+            // 
+            this.labelHullClass.AutoSize = true;
+            this.labelHullClass.Location = new System.Drawing.Point(4, 2);
+            this.labelHullClass.Name = "labelHullClass";
+            this.labelHullClass.Size = new System.Drawing.Size(50, 13);
+            this.labelHullClass.TabIndex = 0;
+            this.labelHullClass.Text = "Hull class";
+            this.labelHullClass.TextChanged += new System.EventHandler(this.labelHullClass_TextChanged);
+            // 
+            // conditionOffice
+            // 
+            this.conditionOffice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.conditionOffice.FormattingEnabled = true;
+            this.conditionOffice.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionOffice.Location = new System.Drawing.Point(171, 294);
+            this.conditionOffice.Name = "conditionOffice";
+            this.conditionOffice.Size = new System.Drawing.Size(125, 21);
+            this.conditionOffice.TabIndex = 111;
+            // 
+            // panel24
+            // 
+            this.panel24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel24.Controls.Add(this.labelOffice);
+            this.panel24.Location = new System.Drawing.Point(5, 294);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(120, 20);
+            this.panel24.TabIndex = 110;
+            // 
+            // labelOffice
+            // 
+            this.labelOffice.AutoSize = true;
+            this.labelOffice.Location = new System.Drawing.Point(4, 2);
+            this.labelOffice.Name = "labelOffice";
+            this.labelOffice.Size = new System.Drawing.Size(36, 13);
+            this.labelOffice.TabIndex = 0;
+            this.labelOffice.Text = "Office";
+            this.labelOffice.TextChanged += new System.EventHandler(this.labelOffice_TextChanged);
+            // 
+            // conditionPort
+            // 
+            this.conditionPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.conditionPort.FormattingEnabled = true;
+            this.conditionPort.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionPort.Location = new System.Drawing.Point(171, 272);
+            this.conditionPort.Name = "conditionPort";
+            this.conditionPort.Size = new System.Drawing.Size(125, 21);
+            this.conditionPort.TabIndex = 109;
+            // 
+            // panel25
+            // 
+            this.panel25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel25.Controls.Add(this.labelPort);
+            this.panel25.Location = new System.Drawing.Point(5, 272);
+            this.panel25.Name = "panel25";
+            this.panel25.Size = new System.Drawing.Size(120, 20);
+            this.panel25.TabIndex = 108;
+            // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.Location = new System.Drawing.Point(4, 2);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(27, 13);
+            this.labelPort.TabIndex = 0;
+            this.labelPort.Text = "Port";
+            this.labelPort.TextChanged += new System.EventHandler(this.labelPort_TextChanged);
+            // 
+            // conditionCompany
+            // 
+            this.conditionCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.conditionCompany.FormattingEnabled = true;
+            this.conditionCompany.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionCompany.Location = new System.Drawing.Point(171, 250);
+            this.conditionCompany.Name = "conditionCompany";
+            this.conditionCompany.Size = new System.Drawing.Size(125, 21);
+            this.conditionCompany.TabIndex = 107;
+            // 
+            // panel26
+            // 
+            this.panel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel26.Controls.Add(this.labelCompany);
+            this.panel26.Location = new System.Drawing.Point(5, 250);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(120, 20);
+            this.panel26.TabIndex = 106;
+            // 
+            // labelCompany
+            // 
+            this.labelCompany.AutoSize = true;
+            this.labelCompany.Location = new System.Drawing.Point(4, 2);
+            this.labelCompany.Name = "labelCompany";
+            this.labelCompany.Size = new System.Drawing.Size(52, 13);
+            this.labelCompany.TabIndex = 0;
+            this.labelCompany.Text = "Company";
+            this.labelCompany.TextChanged += new System.EventHandler(this.labelCompany_TextChanged);
+            // 
+            // conditionDate
+            // 
+            this.conditionDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.conditionDate.FormattingEnabled = true;
+            this.conditionDate.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Between",
+            "Not Between",
+            "Before",
+            "After",
+            "On and Before",
+            "On and After"});
+            this.conditionDate.Location = new System.Drawing.Point(171, 228);
+            this.conditionDate.Name = "conditionDate";
+            this.conditionDate.Size = new System.Drawing.Size(125, 21);
+            this.conditionDate.TabIndex = 105;
+            this.conditionDate.TextChanged += new System.EventHandler(this.conditionDate_TextChanged);
+            // 
+            // panel27
+            // 
+            this.panel27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel27.Controls.Add(this.labelDate);
+            this.panel27.Location = new System.Drawing.Point(5, 228);
+            this.panel27.Name = "panel27";
+            this.panel27.Size = new System.Drawing.Size(120, 20);
+            this.panel27.TabIndex = 104;
+            // 
+            // labelDate
+            // 
+            this.labelDate.AutoSize = true;
+            this.labelDate.Location = new System.Drawing.Point(4, 2);
+            this.labelDate.Name = "labelDate";
+            this.labelDate.Size = new System.Drawing.Size(94, 13);
+            this.labelDate.TabIndex = 0;
+            this.labelDate.Text = "Date of inspection";
+            this.labelDate.TextChanged += new System.EventHandler(this.labelDate_TextChanged);
+            // 
+            // panel28
+            // 
+            this.panel28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel28.Controls.Add(this.showDate);
+            this.panel28.Location = new System.Drawing.Point(129, 227);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(38, 20);
+            this.panel28.TabIndex = 120;
+            // 
+            // showDate
+            // 
+            this.showDate.AutoSize = true;
+            this.showDate.Location = new System.Drawing.Point(11, 2);
+            this.showDate.Name = "showDate";
+            this.showDate.Size = new System.Drawing.Size(15, 14);
+            this.showDate.TabIndex = 0;
+            this.showDate.UseVisualStyleBackColor = true;
+            // 
+            // panel29
+            // 
+            this.panel29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel29.Controls.Add(this.showCompany);
+            this.panel29.Location = new System.Drawing.Point(129, 250);
+            this.panel29.Name = "panel29";
+            this.panel29.Size = new System.Drawing.Size(38, 20);
+            this.panel29.TabIndex = 121;
+            // 
+            // showCompany
+            // 
+            this.showCompany.AutoSize = true;
+            this.showCompany.Location = new System.Drawing.Point(11, 2);
+            this.showCompany.Name = "showCompany";
+            this.showCompany.Size = new System.Drawing.Size(15, 14);
+            this.showCompany.TabIndex = 0;
+            this.showCompany.UseVisualStyleBackColor = true;
+            // 
+            // panel30
+            // 
+            this.panel30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel30.Controls.Add(this.showPort);
+            this.panel30.Location = new System.Drawing.Point(129, 272);
+            this.panel30.Name = "panel30";
+            this.panel30.Size = new System.Drawing.Size(38, 20);
+            this.panel30.TabIndex = 122;
+            // 
+            // showPort
+            // 
+            this.showPort.AutoSize = true;
+            this.showPort.Location = new System.Drawing.Point(11, 2);
+            this.showPort.Name = "showPort";
+            this.showPort.Size = new System.Drawing.Size(15, 14);
+            this.showPort.TabIndex = 0;
+            this.showPort.UseVisualStyleBackColor = true;
+            // 
+            // panel31
+            // 
+            this.panel31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel31.Controls.Add(this.showOffice);
+            this.panel31.Location = new System.Drawing.Point(129, 294);
+            this.panel31.Name = "panel31";
+            this.panel31.Size = new System.Drawing.Size(38, 20);
+            this.panel31.TabIndex = 123;
+            // 
+            // showOffice
+            // 
+            this.showOffice.AutoSize = true;
+            this.showOffice.Location = new System.Drawing.Point(11, 2);
+            this.showOffice.Name = "showOffice";
+            this.showOffice.Size = new System.Drawing.Size(15, 14);
+            this.showOffice.TabIndex = 0;
+            this.showOffice.UseVisualStyleBackColor = true;
+            // 
+            // panel32
+            // 
+            this.panel32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel32.Controls.Add(this.showHullClass);
+            this.panel32.Location = new System.Drawing.Point(129, 316);
+            this.panel32.Name = "panel32";
+            this.panel32.Size = new System.Drawing.Size(38, 20);
+            this.panel32.TabIndex = 124;
+            // 
+            // showHullClass
+            // 
+            this.showHullClass.AutoSize = true;
+            this.showHullClass.Location = new System.Drawing.Point(11, 2);
+            this.showHullClass.Name = "showHullClass";
+            this.showHullClass.Size = new System.Drawing.Size(15, 14);
+            this.showHullClass.TabIndex = 0;
+            this.showHullClass.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 403);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(155, 13);
+            this.label7.TabIndex = 125;
+            this.label7.Text = "* Field blocked by reports filter";
+            // 
+            // panel33
+            // 
+            this.panel33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel33.Controls.Add(this.labelMaster);
+            this.panel33.Location = new System.Drawing.Point(5, 339);
+            this.panel33.Name = "panel33";
+            this.panel33.Size = new System.Drawing.Size(120, 20);
+            this.panel33.TabIndex = 130;
+            // 
+            // labelMaster
+            // 
+            this.labelMaster.AutoSize = true;
+            this.labelMaster.Location = new System.Drawing.Point(4, 2);
+            this.labelMaster.Name = "labelMaster";
+            this.labelMaster.Size = new System.Drawing.Size(40, 13);
+            this.labelMaster.TabIndex = 0;
+            this.labelMaster.Text = "Master";
+            this.labelMaster.TextChanged += new System.EventHandler(this.labelMaster_TextChanged);
+            // 
+            // conditionMaster
+            // 
+            this.conditionMaster.FormattingEnabled = true;
+            this.conditionMaster.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionMaster.Location = new System.Drawing.Point(171, 338);
+            this.conditionMaster.Name = "conditionMaster";
+            this.conditionMaster.Size = new System.Drawing.Size(125, 21);
+            this.conditionMaster.TabIndex = 129;
+            // 
+            // valueMaster
+            // 
+            this.valueMaster.FormattingEnabled = true;
+            this.valueMaster.Location = new System.Drawing.Point(298, 338);
+            this.valueMaster.Name = "valueMaster";
+            this.valueMaster.SearchRule = SuggestComboBox20.SuggestComboBox20.searchRules.cbsContains;
+            this.valueMaster.Size = new System.Drawing.Size(190, 21);
+            this.valueMaster.SuggestBoxHeight = 96;
+            this.valueMaster.TabIndex = 131;
+            // 
+            // panel34
+            // 
+            this.panel34.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel34.Controls.Add(this.showMaster);
+            this.panel34.Location = new System.Drawing.Point(129, 339);
+            this.panel34.Name = "panel34";
+            this.panel34.Size = new System.Drawing.Size(38, 20);
+            this.panel34.TabIndex = 132;
+            // 
+            // showMaster
+            // 
+            this.showMaster.AutoSize = true;
+            this.showMaster.Location = new System.Drawing.Point(11, 2);
+            this.showMaster.Name = "showMaster";
+            this.showMaster.Size = new System.Drawing.Size(15, 14);
+            this.showMaster.TabIndex = 0;
+            this.showMaster.UseVisualStyleBackColor = true;
+            // 
+            // panel35
+            // 
+            this.panel35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel35.Controls.Add(this.showChiefEngineer);
+            this.panel35.Location = new System.Drawing.Point(129, 361);
+            this.panel35.Name = "panel35";
+            this.panel35.Size = new System.Drawing.Size(38, 20);
+            this.panel35.TabIndex = 137;
+            // 
+            // showChiefEngineer
+            // 
+            this.showChiefEngineer.AutoSize = true;
+            this.showChiefEngineer.Location = new System.Drawing.Point(11, 2);
+            this.showChiefEngineer.Name = "showChiefEngineer";
+            this.showChiefEngineer.Size = new System.Drawing.Size(15, 14);
+            this.showChiefEngineer.TabIndex = 0;
+            this.showChiefEngineer.UseVisualStyleBackColor = true;
+            // 
+            // panel36
+            // 
+            this.panel36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel36.Controls.Add(this.labelChiefEngneer);
+            this.panel36.Location = new System.Drawing.Point(5, 361);
+            this.panel36.Name = "panel36";
+            this.panel36.Size = new System.Drawing.Size(120, 20);
+            this.panel36.TabIndex = 135;
+            // 
+            // labelChiefEngneer
+            // 
+            this.labelChiefEngneer.AutoSize = true;
+            this.labelChiefEngneer.Location = new System.Drawing.Point(4, 2);
+            this.labelChiefEngneer.Name = "labelChiefEngneer";
+            this.labelChiefEngneer.Size = new System.Drawing.Size(77, 13);
+            this.labelChiefEngneer.TabIndex = 0;
+            this.labelChiefEngneer.Text = "Chief Engineer";
+            this.labelChiefEngneer.TextChanged += new System.EventHandler(this.labelChiefEngneer_TextChanged);
+            // 
+            // conditionChiefEngineer
+            // 
+            this.conditionChiefEngineer.FormattingEnabled = true;
+            this.conditionChiefEngineer.Items.AddRange(new object[] {
+            "",
+            "Equal",
+            "Nor Equal",
+            "Starts from",
+            "Not Starts from",
+            "Contains",
+            "Not Contains",
+            "Ends on",
+            "Not Ends on"});
+            this.conditionChiefEngineer.Location = new System.Drawing.Point(171, 360);
+            this.conditionChiefEngineer.Name = "conditionChiefEngineer";
+            this.conditionChiefEngineer.Size = new System.Drawing.Size(125, 21);
+            this.conditionChiefEngineer.TabIndex = 134;
+            // 
+            // valueChiefEngineer
+            // 
+            this.valueChiefEngineer.FormattingEnabled = true;
+            this.valueChiefEngineer.Location = new System.Drawing.Point(298, 360);
+            this.valueChiefEngineer.Name = "valueChiefEngineer";
+            this.valueChiefEngineer.SearchRule = SuggestComboBox20.SuggestComboBox20.searchRules.cbsContains;
+            this.valueChiefEngineer.Size = new System.Drawing.Size(190, 21);
+            this.valueChiefEngineer.SuggestBoxHeight = 96;
+            this.valueChiefEngineer.TabIndex = 136;
+            // 
+            // FilterForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.button3;
+            this.ClientSize = new System.Drawing.Size(496, 445);
+            this.Controls.Add(this.panel35);
+            this.Controls.Add(this.panel36);
+            this.Controls.Add(this.conditionChiefEngineer);
+            this.Controls.Add(this.valueChiefEngineer);
+            this.Controls.Add(this.panel34);
+            this.Controls.Add(this.panel33);
+            this.Controls.Add(this.conditionMaster);
+            this.Controls.Add(this.valueMaster);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.panel32);
+            this.Controls.Add(this.panel31);
+            this.Controls.Add(this.panel30);
+            this.Controls.Add(this.panel29);
+            this.Controls.Add(this.panel28);
+            this.Controls.Add(this.valueHullClass);
+            this.Controls.Add(this.valueOffice);
+            this.Controls.Add(this.valuePort);
+            this.Controls.Add(this.valueCompany);
+            this.Controls.Add(this.valueDate2);
+            this.Controls.Add(this.valueDate);
+            this.Controls.Add(this.conditionHullClass);
+            this.Controls.Add(this.panel23);
+            this.Controls.Add(this.conditionOffice);
+            this.Controls.Add(this.panel24);
+            this.Controls.Add(this.conditionPort);
+            this.Controls.Add(this.panel25);
+            this.Controls.Add(this.conditionCompany);
+            this.Controls.Add(this.panel26);
+            this.Controls.Add(this.conditionDate);
+            this.Controls.Add(this.panel27);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.valueInspector);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.valueQuestionGUID);
+            this.Controls.Add(this.conditionQuestionGUID);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.valueOperatorComments);
+            this.Controls.Add(this.valueTechnicalComments);
+            this.Controls.Add(this.valueInspectorComments);
+            this.Controls.Add(this.valueObservation);
+            this.Controls.Add(this.valueQuestionNumber);
+            this.Controls.Add(this.valueReportNumber);
+            this.Controls.Add(this.valueVessel);
+            this.Controls.Add(this.panel22);
+            this.Controls.Add(this.conditionOperatorComments);
+            this.Controls.Add(this.conditionTechnicalComments);
+            this.Controls.Add(this.conditionInspectorComments);
+            this.Controls.Add(this.conditionObservation);
+            this.Controls.Add(this.conditionQuestionNumber);
+            this.Controls.Add(this.conditionReportNumber);
+            this.Controls.Add(this.conditionInspector);
+            this.Controls.Add(this.conditionVessel);
+            this.Controls.Add(this.panel21);
+            this.Controls.Add(this.panel20);
+            this.Controls.Add(this.panel19);
+            this.Controls.Add(this.panel18);
+            this.Controls.Add(this.panel17);
+            this.Controls.Add(this.panel16);
+            this.Controls.Add(this.panel15);
+            this.Controls.Add(this.panel14);
+            this.Controls.Add(this.panel13);
+            this.Controls.Add(this.panel12);
+            this.Controls.Add(this.panel11);
+            this.Controls.Add(this.panel10);
+            this.Controls.Add(this.panel9);
+            this.Controls.Add(this.panel8);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "FilterForm";
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Filter settings";
+            this.panel22.ResumeLayout(false);
+            this.panel22.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
+            this.panel20.ResumeLayout(false);
+            this.panel20.PerformLayout();
+            this.panel19.ResumeLayout(false);
+            this.panel19.PerformLayout();
+            this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
+            this.panel17.ResumeLayout(false);
+            this.panel17.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel23.ResumeLayout(false);
+            this.panel23.PerformLayout();
+            this.panel24.ResumeLayout(false);
+            this.panel24.PerformLayout();
+            this.panel25.ResumeLayout(false);
+            this.panel25.PerformLayout();
+            this.panel26.ResumeLayout(false);
+            this.panel26.PerformLayout();
+            this.panel27.ResumeLayout(false);
+            this.panel27.PerformLayout();
+            this.panel28.ResumeLayout(false);
+            this.panel28.PerformLayout();
+            this.panel29.ResumeLayout(false);
+            this.panel29.PerformLayout();
+            this.panel30.ResumeLayout(false);
+            this.panel30.PerformLayout();
+            this.panel31.ResumeLayout(false);
+            this.panel31.PerformLayout();
+            this.panel32.ResumeLayout(false);
+            this.panel32.PerformLayout();
+            this.panel33.ResumeLayout(false);
+            this.panel33.PerformLayout();
+            this.panel34.ResumeLayout(false);
+            this.panel34.PerformLayout();
+            this.panel35.ResumeLayout(false);
+            this.panel35.PerformLayout();
+            this.panel36.ResumeLayout(false);
+            this.panel36.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        public System.Windows.Forms.TextBox valueOperatorComments;
+        public System.Windows.Forms.TextBox valueTechnicalComments;
+        public System.Windows.Forms.TextBox valueInspectorComments;
+        public System.Windows.Forms.TextBox valueObservation;
+        public System.Windows.Forms.TextBox valueQuestionNumber;
+        public System.Windows.Forms.ComboBox valueReportNumber;
+        public System.Windows.Forms.ComboBox valueVessel;
+        private System.Windows.Forms.Panel panel22;
+        private System.Windows.Forms.Label label20;
+        public System.Windows.Forms.ComboBox conditionOperatorComments;
+        public System.Windows.Forms.ComboBox conditionTechnicalComments;
+        public System.Windows.Forms.ComboBox conditionInspectorComments;
+        public System.Windows.Forms.ComboBox conditionObservation;
+        public System.Windows.Forms.ComboBox conditionQuestionNumber;
+        public System.Windows.Forms.ComboBox conditionReportNumber;
+        public System.Windows.Forms.ComboBox conditionInspector;
+        public System.Windows.Forms.ComboBox conditionVessel;
+        private System.Windows.Forms.Panel panel21;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Panel panel20;
+        public System.Windows.Forms.CheckBox showOperatorComments;
+        private System.Windows.Forms.Panel panel19;
+        public System.Windows.Forms.CheckBox showTechnicalComments;
+        private System.Windows.Forms.Panel panel18;
+        public System.Windows.Forms.CheckBox showInspectorComments;
+        private System.Windows.Forms.Panel panel17;
+        public System.Windows.Forms.CheckBox showObservation;
+        private System.Windows.Forms.Panel panel16;
+        public System.Windows.Forms.CheckBox showQuestionNumber;
+        private System.Windows.Forms.Panel panel15;
+        public System.Windows.Forms.CheckBox showReportNumber;
+        private System.Windows.Forms.Panel panel14;
+        public System.Windows.Forms.CheckBox showInspector;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label labelQuestionGUID;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Label labelTechnicalComments;
+        private System.Windows.Forms.Panel panel11;
+        public System.Windows.Forms.Label labelVessel;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Label labelOperatorComments;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label labelObservation;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label labelQuestionNumber;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label labelInspectorComments;
+        private System.Windows.Forms.Panel panel6;
+        public System.Windows.Forms.CheckBox showVessel;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel4;
+        public System.Windows.Forms.Label labelReportNumber;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.CheckBox showQuestionGUID;
+        public System.Windows.Forms.ComboBox conditionQuestionGUID;
+        public System.Windows.Forms.TextBox valueQuestionGUID;
+        private System.Windows.Forms.Panel panel2;
+        public System.Windows.Forms.Label labelInspector;
+        public SuggestComboBox20.SuggestComboBox20 valueInspector;
+        public System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button3;
+        public System.Windows.Forms.ComboBox valueHullClass;
+        public System.Windows.Forms.ComboBox valueOffice;
+        public System.Windows.Forms.ComboBox valuePort;
+        public System.Windows.Forms.ComboBox valueCompany;
+        public System.Windows.Forms.DateTimePicker valueDate2;
+        public System.Windows.Forms.DateTimePicker valueDate;
+        public System.Windows.Forms.ComboBox conditionHullClass;
+        private System.Windows.Forms.Panel panel23;
+        public System.Windows.Forms.Label labelHullClass;
+        public System.Windows.Forms.ComboBox conditionOffice;
+        private System.Windows.Forms.Panel panel24;
+        public System.Windows.Forms.Label labelOffice;
+        public System.Windows.Forms.ComboBox conditionPort;
+        private System.Windows.Forms.Panel panel25;
+        public System.Windows.Forms.Label labelPort;
+        public System.Windows.Forms.ComboBox conditionCompany;
+        private System.Windows.Forms.Panel panel26;
+        public System.Windows.Forms.Label labelCompany;
+        public System.Windows.Forms.ComboBox conditionDate;
+        private System.Windows.Forms.Panel panel27;
+        public System.Windows.Forms.Label labelDate;
+        private System.Windows.Forms.Panel panel28;
+        public System.Windows.Forms.CheckBox showDate;
+        private System.Windows.Forms.Panel panel29;
+        public System.Windows.Forms.CheckBox showCompany;
+        private System.Windows.Forms.Panel panel30;
+        public System.Windows.Forms.CheckBox showPort;
+        private System.Windows.Forms.Panel panel31;
+        public System.Windows.Forms.CheckBox showOffice;
+        private System.Windows.Forms.Panel panel32;
+        public System.Windows.Forms.CheckBox showHullClass;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel panel33;
+        public System.Windows.Forms.Label labelMaster;
+        public System.Windows.Forms.ComboBox conditionMaster;
+        public SuggestComboBox20.SuggestComboBox20 valueMaster;
+        private System.Windows.Forms.Panel panel34;
+        public System.Windows.Forms.CheckBox showMaster;
+        private System.Windows.Forms.Panel panel35;
+        public System.Windows.Forms.CheckBox showChiefEngineer;
+        private System.Windows.Forms.Panel panel36;
+        public System.Windows.Forms.Label labelChiefEngneer;
+        public System.Windows.Forms.ComboBox conditionChiefEngineer;
+        public SuggestComboBox20.SuggestComboBox20 valueChiefEngineer;
+    }
+}

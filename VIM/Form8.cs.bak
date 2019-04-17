@@ -1,0 +1,1251 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.OleDb;
+
+namespace VIQExtractor
+{
+    public partial class QuestionsMappingForm : Form
+    {
+        OleDbConnection connection;
+        DataSet DS;
+        OleDbDataAdapter viqMasterAdapter;
+        OleDbDataAdapter viqSlaveAdapter;
+        OleDbDataAdapter viqMappingAdapter;
+        OleDbDataAdapter masterVIQTypes;
+        OleDbDataAdapter slaveVIQTypes;
+        int masterMajorVersion = 0;
+        int slaveMajorVersion = 0;
+        string viqShortType = "";
+
+        public QuestionsMappingForm(OleDbConnection mainConnection, DataSet mainDS, Font mainFont, Icon mainIcon)
+        {
+            InitializeComponent();
+            connection = mainConnection;
+            DS = mainDS;
+            this.Font = mainFont;
+            this.Icon = mainIcon;
+
+            fillQuestionnaireVersions();
+        }
+
+        private void fillQuestionnaireTypes(string VIQVersion, ComboBox cb, bool useMaster)
+        {
+            string s = "select TITLE, TYPE_CODE from TEMPLATES where [VERSION]='" + VIQVersion + "' order by TITLE";
+
+            if (useMaster)
+            {
+                if (DS.Tables.Contains("MASTER_TYPES"))
+                    DS.Tables["MASTER_TYPES"].Clear();
+
+                masterVIQTypes = new OleDbDataAdapter(s, connection);
+
+                masterVIQTypes.Fill(DS, "MASTER_TYPES");
+
+                DataTable dt = DS.Tables["MASTER_TYPES"];
+
+                cb.DataSource = dt;
+                cb.DisplayMember = "TITLE";
+                cb.ValueMember = "TYPE_CODE";
+            }
+            else
+            {
+                if (DS.Tables.Contains("SLAVE_TYPES"))
+                    DS.Tables["SLAVE_TYPES"].Clear();
+
+                masterVIQTypes = new OleDbDataAdapter(s, connection);
+
+                masterVIQTypes.Fill(DS, "SLAVE_TYPES");
+
+                DataTable dt = DS.Tables["SLAVE_TYPES"];
+
+                cb.DataSource = dt;
+                cb.DisplayMember = "TITLE";
+                cb.ValueMember = "TYPE_CODE";
+            }
+
+
+            /*
+            OleDbCommand cmd = new OleDbCommand(s, connection);
+
+            try
+            {
+                OleDbDataReader qTypes = cmd.ExecuteReader();
+
+                cb.Items.Clear();
+
+                while (qTypes.Read())
+                {
+                    cb.Items.Add(Convert.ToString(qTypes[0]));
+                }
+
+                qTypes.Close();
+            }
+            catch
+            {
+                //Do nothing
+            }
+            */
+        }
+
+        private void fillQuestionnaireVersions()
+        {
+            OleDbCommand cmd = new OleDbCommand("select DISTINCT VERSION from TEMPLATES order by VERSION", connection);
+
+            try
+            {
+                OleDbDataReader qVersions = cmd.ExecuteReader();
+
+                comboBox1.Items.Clear();
+                comboBox4.Items.Clear();
+
+                while (qVersions.Read())
+                {
+                    comboBox1.Items.Add(Convert.ToString(qVersions[0]));
+                    comboBox4.Items.Add(Convert.ToString(qVersions[0]));
+                }
+
+                qVersions.Close();
+            }
+            catch
+            {
+                //Do nothing
+            }
+        }
+
+        private void comboBox1_TextChanged(object sender, EventArgs e)
+        {
+            fillQuestionnaireTypes(comboBox1.Text, comboBox2, true);
+            comboBox2.SelectedValue = "";
+            comboBox2.Text = "";
+
+            if (comboBox1.Text.Length > 0)
+                masterMajorVersion = Convert.ToInt16(comboBox1.Text.Substring(0, comboBox1.Text.IndexOf(".")));
+            else
+                masterMajorVersion = 0;
+
+            //fillMasterVIQQuestions();
+        }
+
+        private void comboBox4_TextChanged(object sender, EventArgs e)
+        {
+            fillQuestionnaireTypes(comboBox4.Text, comboBox3,false);
+            comboBox3.Text = "";
+
+            if (comboBox4.Text.Length > 0)
+                slaveMajorVersion = Convert.ToInt16(comboBox4.Text.Substring(0, comboBox4.Text.IndexOf(".")));
+            else
+                slaveMajorVersion = 0;
+        }
+
+        private void fillMasterVIQQuestions()
+        {
+            if (DS.Tables.Contains("MasterVIQ"))
+                DS.Tables["MasterVIQ"].Clear(); 
+            
+            string s="";
+            string where = "";
+            string orderBy = "";
+
+            //if ((comboBox1.Text.Length > 0) && (comboBox2.Text.Length > 0))
+
+            s = "select TEMPLATE_QUESTIONS.QUESTION_NUMBER, TEMPLATE_QUESTIONS.QUESTION_TEXT, TEMPLATE_QUESTIONS.QUESTION_GUID, "+
+                "TEMPLATE_QUESTIONS.SEQUENCE, TEMPLATE_KEYS.ID as KEY_ID, \n" +
+                "TEMPLATE_KEYS.SUBCHAPTER, TEMPLATE_KEYS.KEY_INDEX \n"+
+                "from (TEMPLATE_QUESTIONS inner join TEMPLATES\n" +
+                "on TEMPLATE_QUESTIONS.TEMPLATE_GUID=TEMPLATES.TEMPLATE_GUID) \n"+
+                "left join TEMPLATE_KEYS on TEMPLATE_QUESTIONS.QUESTION_NUMBER=TEMPLATE_KEYS.QUESTION_NUMBER \n";
+            
+            where = "where TEMPLATES.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                "and TEMPLATES.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n"+
+                "and (TEMPLATE_KEYS.VIQ_MAJOR_VERSION="+masterMajorVersion.ToString()+" or TEMPLATE_KEYS.VIQ_MAJOR_VERSION is Null) \n"+
+                "and (TEMPLATE_KEYS.VIQ_SHORT_TYPE='"+StrToSQLStr(viqShortType)+
+                "' or TEMPLATE_KEYS.VIQ_SHORT_TYPE is Null or LEN(TEMPLATE_KEYS.VIQ_SHORT_TYPE)=0)";
+            
+            switch (comboBox5.Text)
+            {
+                case "Questions for chapter":
+                    if (numericUpDown1.Value > 0)
+                        where = where + "and TEMPLATE_QUESTIONS.QUESTION_NUMBER like '" + numericUpDown1.Value.ToString() + ".%' \n";
+                    break;
+                case "Unmapped questions":
+                    where = where + " and QUESTION_GUID not in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_MASTER_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Unmapped for chapter":
+                    if (numericUpDown1.Value > 0)
+                        where = where + "and QUESTION_NUMBER like '" + numericUpDown1.Value.ToString() + ".%' \n";
+                    
+                    where = where + " and QUESTION_GUID not in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_MASTER_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Mapped questions":
+                    where = where + " and QUESTION_GUID in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_MASTER_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Mapped for chapter":
+                    if (numericUpDown1.Value > 0)
+                        where = where + "and QUESTION_NUMBER like '" + numericUpDown1.Value.ToString() + ".%' \n";
+
+                    where = where + " and QUESTION_GUID in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_MASTER_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+            }
+
+
+            orderBy = "order by TEMPLATE_QUESTIONS.SEQUENCE";
+            
+
+            viqMasterAdapter = new OleDbDataAdapter(s+where+orderBy, connection);
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                viqMasterAdapter.Fill(DS, "MasterVIQ");
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+
+            dataGridView1.DataSource = DS;
+            dataGridView1.AutoGenerateColumns = true;
+            
+
+            //dataGridView1.SortCompare += new DataGridViewSortCompareEventHandler(
+            //    this.dataGridView1_SortCompare);
+            dataGridView1.DataMember = "MasterVIQ";
+
+            dataGridView1.Columns["QUESTION_NUMBER"].HeaderText = "No.";
+            //dataGridView1.Columns["QUESTION_NUMBER"].FillWeight = 10;
+            //dataGridView1.Columns["QUESTION_NUMBER"].MinimumWidth = 30;
+            dataGridView1.Columns["QUESTION_NUMBER"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns["QUESTION_TEXT"].HeaderText = "Question text";
+            dataGridView1.Columns["QUESTION_GUID"].Visible = false;
+            dataGridView1.Columns["SEQUENCE"].Visible = false;
+            dataGridView1.Columns["SUBCHAPTER"].HeaderText = "Subchapter";
+            dataGridView1.Columns["SUBCHAPTER"].FillWeight = 25;
+            dataGridView1.Columns["KEY_INDEX"].HeaderText = "Key index";
+            dataGridView1.Columns["KEY_INDEX"].FillWeight = 25;
+            dataGridView1.Columns["KEY_ID"].Visible = false;
+
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.Programmatic;
+            }
+
+        }
+
+        private void fillSlaveVIQQuestions()
+        {
+            if (DS.Tables.Contains("SlaveVIQ"))
+                DS.Tables["SlaveVIQ"].Clear();
+
+            string s = "";
+            string where = "";
+            string orderBy = "";
+
+            //if ((comboBox3.Text.Length > 0) && (comboBox4.Text.Length > 0))
+
+            s = "select QUESTION_NUMBER,QUESTION_TEXT, QUESTION_GUID, SEQUENCE\n" +
+                "from TEMPLATE_QUESTIONS inner join TEMPLATES\n" +
+                "on TEMPLATE_QUESTIONS.TEMPLATE_GUID=TEMPLATES.TEMPLATE_GUID\n";
+            where = "where TEMPLATES.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                "and TEMPLATES.VERSION='" + StrToSQLStr(comboBox4.Text) + "'\n";
+            orderBy="order by SEQUENCE";
+            
+
+
+            switch (comboBox6.Text)
+            {
+                case "Questions for chapter":
+                    if (numericUpDown2.Value > 0)
+                        where = where + "and QUESTION_NUMBER like '" + numericUpDown2.Value.ToString() + ".%' \n";
+                    break;
+                case "Unmapped questions":
+                    where = where + " and QUESTION_GUID not in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_SLAVE_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Unmapped for chapter":
+                    if (numericUpDown2.Value > 0)
+                        where = where + "and QUESTION_NUMBER like '" + numericUpDown2.Value.ToString() + ".%' \n";
+
+                    where = where + " and QUESTION_GUID not in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_SLAVE_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Mapped questions":
+                    where = where + " and QUESTION_GUID in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_SLAVE_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+                case "Mapped for chapter":
+                    if (numericUpDown2.Value > 0)
+                        where = where + "and QUESTION_NUMBER like '" + numericUpDown2.Value.ToString() + ".%' \n";
+
+                    where = where + " and QUESTION_GUID in \n" +
+                        "(SELECT QUESTIONS_MAPPING.QUESTION_SLAVE_GUID \n" +
+                        "FROM (((QUESTIONS_MAPPING \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n" +
+                        "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP1 \n" +
+                        "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n" +
+                        "INNER JOIN TEMPLATES AS TP2 \n" +
+                        "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n" +
+                        "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                        "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                        "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                        "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "')";
+                    break;
+            }
+
+            viqSlaveAdapter = new OleDbDataAdapter(s+where+orderBy, connection);
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                viqSlaveAdapter.Fill(DS, "SlaveVIQ");
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+
+            dataGridView3.DataSource = DS;
+            dataGridView3.AutoGenerateColumns = true;
+            dataGridView3.DataMember = "SlaveVIQ";
+
+            dataGridView3.Columns["QUESTION_NUMBER"].HeaderText = "No.";
+            //dataGridView3.Columns["QUESTION_NUMBER"].FillWeight = 10;
+            //dataGridView3.Columns["QUESTION_NUMBER"].MinimumWidth = 30;
+            dataGridView3.Columns["QUESTION_NUMBER"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView3.Columns["QUESTION_TEXT"].HeaderText = "Question text";
+            dataGridView3.Columns["QUESTION_GUID"].Visible = false;
+            dataGridView3.Columns["SEQUENCE"].Visible = false;
+
+            foreach (DataGridViewColumn column in dataGridView3.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.Programmatic;
+            }
+        }
+
+        
+        public string StrToSQLStr(string Text)
+        {
+            return Text.Replace("'", "''");
+        }
+
+        private void comboBox2_TextChanged(object sender, EventArgs e)
+        {
+            string s = "";
+            
+            if (comboBox2.SelectedValue!=null)
+                s=comboBox2.SelectedValue.ToString();
+
+            if ((s.Length==4) && (s.Substring(2, 2) == "01"))
+                button6.Visible = true;
+            else
+                button6.Visible = false;
+
+            viqShortType = "";
+
+            if (comboBox2.Text.Contains("Petroleum"))
+                viqShortType = "Petroleum";
+            else
+                if (comboBox2.Text.Contains("Chemical"))
+                    viqShortType = "Chemical";
+                else
+                    if (comboBox2.Text.Contains("LPG"))
+                        viqShortType = "LPG";
+                    else
+                        if (comboBox2.Text.Contains("LNG"))
+                            viqShortType = "LNG";
+
+            fillMasterVIQQuestions();
+            fillMapQuestions();
+        }
+
+        private void comboBox3_TextChanged(object sender, EventArgs e)
+        {
+            fillSlaveVIQQuestions();
+            fillMapQuestions();
+        }
+
+        private void fillMapQuestions()
+        {
+            if (DS.Tables.Contains("MapQuestions"))
+                DS.Tables["MapQuestions"].Clear();
+
+            string s = "";
+
+            s = "SELECT TQ1.QUESTION_NUMBER AS QN1, TQ2.QUESTION_NUMBER AS QN2, "+
+                "QUESTIONS_MAPPING.QUESTION_MASTER_GUID, QUESTIONS_MAPPING.QUESTION_SLAVE_GUID \n"+
+                "FROM (((QUESTIONS_MAPPING \n"+ 
+	            "INNER JOIN TEMPLATE_QUESTIONS AS TQ1 \n"+
+	            "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID) \n"+
+	            "INNER JOIN TEMPLATE_QUESTIONS AS TQ2 \n"+
+	            "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID) \n"+
+	            "INNER JOIN TEMPLATES AS TP1 \n"+
+	            "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID) \n"+
+	            "INNER JOIN TEMPLATES AS TP2 \n"+
+	            "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID \n"+
+                "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "'\n" +
+                "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "'\n" +
+                "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "'\n" +
+                "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "'\n" +
+                "ORDER BY TQ1.SEQUENCE, TQ2.SEQUENCE";
+
+            viqMappingAdapter = new OleDbDataAdapter(s, connection);
+
+            viqMappingAdapter.Fill(DS, "MapQuestions");
+
+            dataGridView2.DataSource = DS;
+            dataGridView2.AutoGenerateColumns = true;
+            dataGridView2.DataMember = "MapQuestions";
+
+            dataGridView2.Columns["QN1"].HeaderText = "Master";
+            dataGridView2.Columns["QN1"].FillWeight = 50;
+            dataGridView2.Columns["QN1"].DefaultCellStyle.BackColor = dataGridView1.BackgroundColor;
+            dataGridView2.Columns["QN2"].HeaderText = "Slave";
+            dataGridView2.Columns["QN2"].FillWeight = 50;
+            dataGridView2.Columns["QN2"].DefaultCellStyle.BackColor = dataGridView3.BackgroundColor;
+            dataGridView2.Columns["QUESTION_MASTER_GUID"].Visible = false;
+            dataGridView2.Columns["QUESTION_SLAVE_GUID"].Visible = false;
+            
+            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Map two selected questions
+
+            if (dataGridView1.RowCount == 0) return;
+            if (dataGridView3.RowCount == 0) return;
+
+            string masterGUID = dataGridView1.CurrentRow.Cells["QUESTION_GUID"].Value.ToString();
+            string slaveGUID = dataGridView3.CurrentRow.Cells["QUESTION_GUID"].Value.ToString();
+
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            //Check whether the same record exists
+
+            cmd.CommandText = "select Count(QUESTION_MASTER_GUID) as QC from QUESTIONS_MAPPING \n" +
+                "where QUESTION_MASTER_GUID='{" + masterGUID + "}' and QUESTION_SLAVE_GUID='{" + slaveGUID + "}'";
+            
+            int recs = (int) cmd.ExecuteScalar();
+
+            if (recs == 0)
+            {
+                cmd.CommandText = "insert into QUESTIONS_MAPPING (QUESTION_MASTER_GUID,QUESTION_SLAVE_GUID) \n" +
+                    "values('" + masterGUID + "','" + slaveGUID + "')";
+                cmd.ExecuteNonQuery();
+
+                fillMapQuestions();
+            }
+
+            int rowIndex = -1;
+
+            foreach (DataGridViewRow dgRow in dataGridView2.Rows)
+            {
+                if (dgRow.Cells["QUESTION_MASTER_GUID"].Value.ToString().Equals(masterGUID) &&
+                    dgRow.Cells["QUESTION_SLAVE_GUID"].Value.ToString().Equals(slaveGUID))
+                {
+                    rowIndex = dgRow.Index;
+                    break;
+                }
+            }
+
+            if (rowIndex >= 0)
+            {
+                if (rowIndex <= dataGridView2.RowCount - 1)
+                {
+                    dataGridView2.CurrentCell = dataGridView2[0, rowIndex];
+                    dataGridView2.FirstDisplayedCell = dataGridView2.CurrentCell;
+                }
+                else
+                    dataGridView2.CurrentCell = dataGridView2[0, dataGridView2.RowCount - 1];
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //Map questions with the same spelling
+
+            if (dataGridView1.RowCount == 0) return;
+            if (dataGridView3.RowCount == 0) return;
+
+            var rslt = System.Windows.Forms.MessageBox.Show("You are going to map all questions with the same spelling for selected questionnaire.\n" +
+    "Would you like to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (rslt != DialogResult.Yes) return;
+
+            mapQuestions2();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Delete all mapped records for selected questionnairies
+            if (dataGridView1.RowCount == 0) return;
+            if (dataGridView3.RowCount == 0) return;
+            if (dataGridView2.RowCount == 0) return;
+
+            var rslt = System.Windows.Forms.MessageBox.Show("You are going to delete all questions maping from questionnaire version \""+
+                comboBox1.Text+"\" and type \""+comboBox2.Text+"\" to questions of questionnaire version \""+comboBox4.Text+
+                "\" and type \""+comboBox3.Text+"\".\n" +
+                "Would you like to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (rslt != DialogResult.Yes) return;
+
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            cmd.CommandText = "delete from QUESTIONS_MAPPING \n" +
+                "where QUESTION_MASTER_GUID in \n" +
+                "(select QUESTION_GUID FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES  \n" +
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID \n" +
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox1.Text) + "' \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox2.Text) + "') \n" +
+                "and QUESTION_SLAVE_GUID in \n" +
+                "(select QUESTION_GUID FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES  \n" +
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID \n" +
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox4.Text) + "' \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox3.Text) + "') \n";
+            cmd.ExecuteNonQuery();
+
+            fillMapQuestions();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Delete selected question mapping
+
+            if (dataGridView1.RowCount == 0) return;
+            if (dataGridView3.RowCount == 0) return;
+            if (dataGridView2.RowCount == 0) return;
+
+            var rslt = System.Windows.Forms.MessageBox.Show("You are going to delete maping for question No. \""+dataGridView2.CurrentRow.Cells["QN1"].Value.ToString()+
+                "\" from questionnaire version \""+comboBox1.Text+"\" and type \""+comboBox2.Text+"\" with question No. \""+
+                dataGridView2.CurrentRow.Cells["QN2"].Value.ToString()+"\" from questionnaire version \""+comboBox4.Text+
+                "\" and type \""+comboBox3.Text+"\".\n" +
+                "Would you like to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (rslt != DialogResult.Yes) return;
+
+            int curRow = dataGridView2.CurrentCell.RowIndex;
+            int curCol = dataGridView2.CurrentCell.ColumnIndex;
+            
+            string masterGUID = dataGridView2.CurrentRow.Cells["QUESTION_MASTER_GUID"].Value.ToString();
+            string slaveGUID = dataGridView2.CurrentRow.Cells["QUESTION_SLAVE_GUID"].Value.ToString();
+
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            cmd.CommandText = "delete from QUESTIONS_MAPPING \n" +
+                "where QUESTION_MASTER_GUID = '{" + masterGUID + "}' \n" +
+                "and QUESTION_SLAVE_GUID = '{" + slaveGUID + "}'";
+            cmd.ExecuteNonQuery();
+
+            fillMapQuestions();
+
+            if (dataGridView2.RowCount > curRow)
+                dataGridView2.CurrentCell = dataGridView2[curCol, curRow];
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Double click on mapping grid
+            if (dataGridView1.RowCount == 0) return;
+            if (dataGridView3.RowCount == 0) return;
+            if (dataGridView2.RowCount == 0) return;
+
+            int curRow = dataGridView2.CurrentCell.RowIndex;
+            int curCol = dataGridView2.CurrentCell.ColumnIndex;
+
+            string masterGUID = dataGridView2.CurrentRow.Cells["QUESTION_MASTER_GUID"].Value.ToString();
+            string slaveGUID = dataGridView2.CurrentRow.Cells["QUESTION_SLAVE_GUID"].Value.ToString();
+
+            int rowIndex = -1;
+
+            if (curCol == 0)
+            {
+                //Click on Master cell
+
+                foreach (DataGridViewRow dgRow in dataGridView1.Rows)
+                {
+                    if (dgRow.Cells["QUESTION_GUID"].Value.ToString().Equals(masterGUID))
+                    {
+                        rowIndex = dgRow.Index;
+                        break;
+                    }
+                }
+
+                if (rowIndex >= 0)
+                {
+                    dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
+                }
+            }
+            else
+            {
+                //Click on Slave cell
+
+                foreach (DataGridViewRow dgRow in dataGridView3.Rows)
+                {
+                    if (dgRow.Cells["QUESTION_GUID"].Value.ToString().Equals(slaveGUID))
+                    {
+                        rowIndex = dgRow.Index;
+                        break;
+                    }
+                }
+
+                if (rowIndex >= 0)
+                {
+                    dataGridView3.CurrentCell = dataGridView3[0, rowIndex];
+                }
+
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Double click on mapping grid
+            if (dataGridView1.RowCount == 0) return;
+
+            int curRow = dataGridView1.CurrentCell.RowIndex;
+            int curCol = dataGridView1.CurrentCell.ColumnIndex;
+            int vRow = dataGridView1.FirstDisplayedScrollingRowIndex;
+
+            string masterGUID = dataGridView1.CurrentRow.Cells["QUESTION_GUID"].Value.ToString();
+            int rowIndex = -1;
+
+            if (curCol == 0)
+            {
+                if (dataGridView3.RowCount == 0) return;
+                if (dataGridView2.RowCount == 0) return;
+
+                foreach (DataGridViewRow dgRow in dataGridView2.Rows)
+                {
+                    if (dgRow.Cells["QUESTION_MASTER_GUID"].Value.ToString().Equals(masterGUID))
+                    {
+                        rowIndex = dgRow.Index;
+                        break;
+                    }
+                }
+
+                if (rowIndex >= 0)
+                {
+                    dataGridView2.CurrentCell = dataGridView2[0, rowIndex];
+                }
+            }
+            else
+            {
+                //Show question details
+                QuestionDetailsForm qdForm = new QuestionDetailsForm(connection, DS, this.Font, this.Icon);
+
+                qdForm.textBox1.Text = masterMajorVersion.ToString();
+                qdForm.textBox2.Text = comboBox2.Text;
+                qdForm.textBox3.Text = dataGridView1.CurrentRow.Cells["QUESTION_TEXT"].Value.ToString();
+                qdForm.comboBox1.Text = dataGridView1.CurrentRow.Cells["SUBCHAPTER"].Value.ToString();
+                qdForm.textBox5.Text = dataGridView1.CurrentRow.Cells["KEY_INDEX"].Value.ToString();
+                qdForm.textBox6.Text = dataGridView1.CurrentRow.Cells["QUESTION_NUMBER"].Value.ToString();
+
+                var rslt = qdForm.ShowDialog();
+
+                if (rslt == DialogResult.OK)
+                {
+                    OleDbCommand cmd = new OleDbCommand("", connection);
+
+                    if ((dataGridView1.CurrentRow.Cells["KEY_ID"].Value == null) ||
+                        (dataGridView1.CurrentRow.Cells["KEY_ID"].Value.ToString().Length==0))
+                    {
+                        string shortType = "";
+
+                        if (dataGridView1.CurrentRow.Cells["QUESTION_NUMBER"].Value.ToString().StartsWith("8"))
+                            shortType = viqShortType;
+
+                        cmd.CommandText =
+                            "insert into TEMPLATE_KEYS (QUESTION_NUMBER, SUBCHAPTER, KEY_INDEX, VIQ_MAJOR_VERSION, VIQ_SHORT_TYPE) \n" +
+                            "values ('" + dataGridView1.CurrentRow.Cells["QUESTION_NUMBER"].Value.ToString() + "', \n'" +
+                                        StrToSQLStr(qdForm.comboBox1.Text) + "', \n'" +
+                                        StrToSQLStr(qdForm.textBox5.Text) + "', \n" +
+                                        masterMajorVersion.ToString() + ", \n'" +
+                                        StrToSQLStr(viqShortType) + "')";
+                        cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        if ((qdForm.comboBox1.Text.Length == 0) && (qdForm.textBox5.Text.Length == 0))
+                        {
+                            cmd.CommandText =
+                                "delete from TEMPLATE_KEYS \n" +
+                                "where ID=" + dataGridView1.CurrentRow.Cells["KEY_ID"].Value.ToString();
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            cmd.CommandText =
+                                "update TEMPLATE_KEYS set\n" +
+                                "SUBCHAPTER='" + StrToSQLStr(qdForm.comboBox1.Text) + "', \n" +
+                                "KEY_INDEX='" + StrToSQLStr(qdForm.textBox5.Text) + "' \n" +
+                                "where ID=" + dataGridView1.CurrentRow.Cells["KEY_ID"].Value.ToString();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+
+                    if (DS.Tables.Contains("MasterVIQ"))
+                        DS.Tables["MasterVIQ"].Clear();
+
+                    try
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        viqMasterAdapter.Fill(DS, "MasterVIQ");
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+
+                    dataGridView1.FirstDisplayedScrollingRowIndex = vRow;
+                    dataGridView1.CurrentCell = dataGridView1[curCol, curRow];
+                }
+            }
+        }
+
+        private void dataGridView1_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+        {
+           
+        }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewColumn newColumn = dataGridView1.Columns[e.ColumnIndex];
+            DataGridViewColumn oldColumn = dataGridView1.SortedColumn;
+            DataGridViewColumn sequenceColumn = dataGridView1.Columns["SEQUENCE"];
+            DataGridViewColumn sortColumn;
+
+            ListSortDirection direction;
+
+            if (newColumn.Name == "QUESTION_NUMBER")
+                sortColumn = sequenceColumn;
+            else
+                sortColumn = newColumn;
+
+            // If oldColumn is null, then the DataGridView is not sorted. 
+            if (oldColumn != null)
+            {
+                // Sort the same column again, reversing the SortOrder. 
+                if (oldColumn == sortColumn)
+                {
+                    if (dataGridView1.SortOrder == SortOrder.Ascending)
+                    {
+                        direction = ListSortDirection.Descending;
+                        oldColumn.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        direction = ListSortDirection.Ascending;
+                        oldColumn.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // Sort a new column and remove the old SortGlyph.
+                    direction = ListSortDirection.Ascending;
+                    oldColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
+                }
+            }
+            else
+            {
+                if (newColumn.Name == "QUESTION_NUMBER")
+                    direction = ListSortDirection.Descending;
+                else
+                    direction = ListSortDirection.Ascending;
+            }
+
+            // Sort the selected column.
+            if (sortColumn.Name == "SEQUENCE")
+            {
+                dataGridView1.Sort(sortColumn, direction);
+                if (oldColumn != newColumn)
+                {
+                    newColumn.HeaderCell.SortGlyphDirection =
+                        direction == ListSortDirection.Ascending ?
+                        SortOrder.Ascending : SortOrder.Descending;
+                }
+            }
+            else
+            {
+                dataGridView1.Sort(newColumn, direction);
+                if (oldColumn != newColumn)
+                {
+                    newColumn.HeaderCell.SortGlyphDirection =
+                        direction == ListSortDirection.Ascending ?
+                        SortOrder.Ascending : SortOrder.Descending;
+                }
+            }
+        }
+
+        private void dataGridView3_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewColumn newColumn = dataGridView3.Columns[e.ColumnIndex];
+            DataGridViewColumn oldColumn = dataGridView3.SortedColumn;
+            DataGridViewColumn sequenceColumn = dataGridView3.Columns["SEQUENCE"];
+            DataGridViewColumn sortColumn;
+
+            ListSortDirection direction;
+
+            if (newColumn.Name == "QUESTION_NUMBER")
+                sortColumn = sequenceColumn;
+            else
+                sortColumn = newColumn;
+
+            // If oldColumn is null, then the DataGridView is not sorted. 
+            if (oldColumn != null)
+            {
+                // Sort the same column again, reversing the SortOrder. 
+                if (oldColumn == sortColumn)
+                {
+                    if (dataGridView1.SortOrder == SortOrder.Ascending)
+                    {
+                        direction = ListSortDirection.Descending;
+                        oldColumn.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+                    }
+                    else
+                    {
+                        direction = ListSortDirection.Ascending;
+                        oldColumn.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+                    }
+                }
+                else
+                {
+                    // Sort a new column and remove the old SortGlyph.
+                    direction = ListSortDirection.Ascending;
+                    oldColumn.HeaderCell.SortGlyphDirection = SortOrder.None;
+                }
+            }
+            else
+            {
+                if (newColumn.Name == "QUESTION_NUMBER")
+                    direction = ListSortDirection.Descending;
+                else
+                    direction = ListSortDirection.Ascending;
+            }
+
+            // Sort the selected column.
+            if (sortColumn.Name == "SEQUENCE")
+            {
+                dataGridView3.Sort(sortColumn, direction);
+                if (oldColumn != newColumn)
+                {
+                    newColumn.HeaderCell.SortGlyphDirection =
+                        direction == ListSortDirection.Ascending ?
+                        SortOrder.Ascending : SortOrder.Descending;
+                }
+            }
+            else
+            {
+                dataGridView3.Sort(newColumn, direction);
+                if (oldColumn != newColumn)
+                {
+                    newColumn.HeaderCell.SortGlyphDirection =
+                        direction == ListSortDirection.Ascending ?
+                        SortOrder.Ascending : SortOrder.Descending;
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void mapQuestions1()
+        {
+
+            OleDbCommand cmd = new OleDbCommand("", connection);
+            cmd.CommandText = "insert into QUESTIONS_MAPPING (QUESTION_MASTER_GUID,QUESTION_SLAVE_GUID) \n" +
+                /*
+                "SELECT Q1.QUESTION_GUID, Q2.QUESTION_GUID \n"+
+                "FROM \n"+
+                "(SELECT * \n"+
+                "FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES  \n"+
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID \n"+
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox1.Text) + "' \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox2.Text) + "' \n" +
+                "and UCASE(QUESTION_TEXT)<>'ADDITIONAL COMMENTS') as Q1 \n" +
+                "INNER JOIN \n"+
+                "(SELECT * \n"+
+                "FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES  \n"+
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID \n"+
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox4.Text) + "' \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox3.Text) + "' \n" +
+                "and UCASE(QUESTION_TEXT)<>'ADDITIONAL COMMENTS') as Q2 \n" +
+                "ON Q1.QUESTION_TEXT = Q2.QUESTION_TEXT";
+                */
+
+                "select QQ1.MASTER_GUID, QQ1.SLAVE_GUID \n" +
+                "from \n" +
+                "(SELECT Q1.QUESTION_GUID AS MASTER_GUID, Q2.QUESTION_GUID AS SLAVE_GUID  \n" +
+                "FROM  \n" +
+                "(SELECT *  \n" +
+                "FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES   \n" +
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID  \n" +
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox1.Text) + "'  \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox2.Text) + "' \n" +
+                "and UCASE(QUESTION_TEXT)<>'ADDITIONAL COMMENTS') as Q1  \n" +
+                "INNER JOIN  \n" +
+                "(SELECT *  \n" +
+                "FROM TEMPLATE_QUESTIONS INNER JOIN TEMPLATES   \n" +
+                "ON TEMPLATE_QUESTIONS.TEMPLATE_GUID = TEMPLATES.TEMPLATE_GUID  \n" +
+                "WHERE TEMPLATES.VERSION='" + StrToSQLStr(comboBox4.Text) + "'  \n" +
+                "and TEMPLATES.TITLE='" + StrToSQLStr(comboBox3.Text) + "'  \n" +
+                "and UCASE(QUESTION_TEXT)<>'ADDITIONAL COMMENTS') as Q2  \n" +
+                "ON UCASE(LEFT(Q1.QUESTION_TEXT,255)) = UCASE(LEFT(Q2.QUESTION_TEXT,255))) AS QQ1 \n" +
+                "LEFT JOIN \n" +
+                "(SELECT QUESTIONS_MAPPING.QUESTION_MASTER_GUID, QUESTIONS_MAPPING.QUESTION_SLAVE_GUID  \n" +
+                "FROM (((QUESTIONS_MAPPING  \n" +
+                "INNER JOIN TEMPLATE_QUESTIONS AS TQ1  \n" +
+                "ON QUESTIONS_MAPPING.QUESTION_MASTER_GUID = TQ1.QUESTION_GUID)  \n" +
+                "INNER JOIN TEMPLATE_QUESTIONS AS TQ2  \n" +
+                "ON QUESTIONS_MAPPING.QUESTION_SLAVE_GUID = TQ2.QUESTION_GUID)  \n" +
+                "INNER JOIN TEMPLATES AS TP1  \n" +
+                "ON TQ1.TEMPLATE_GUID = TP1.TEMPLATE_GUID)  \n" +
+                "INNER JOIN TEMPLATES AS TP2  \n" +
+                "ON TQ2.TEMPLATE_GUID = TP2.TEMPLATE_GUID  \n" +
+                "WHERE TP1.TITLE='" + StrToSQLStr(comboBox2.Text) + "' \n" +
+                "and TP1.VERSION='" + StrToSQLStr(comboBox1.Text) + "' \n" +
+                "and TP2.TITLE='" + StrToSQLStr(comboBox3.Text) + "' \n" +
+                "and TP2.VERSION='" + StrToSQLStr(comboBox4.Text) + "') AS QQ2 \n" +
+                "ON QQ1.MASTER_GUID=QQ2.QUESTION_MASTER_GUID \n" +
+                "AND QQ1.SLAVE_GUID=QQ2.QUESTION_SLAVE_GUID \n" +
+                "WHERE QQ2.QUESTION_MASTER_GUID IS NULL";
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                cmd.ExecuteNonQuery();
+
+                fillMapQuestions();
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void mapQuestions2()
+        {
+            DataTable master = DS.Tables["MasterVIQ"];
+            DataTable slave = DS.Tables["SlaveVIQ"];
+            DataTable map = DS.Tables["MapQuestions"];
+
+            DataRow[] mRows = master.Select();
+            DataRow[] sRows = slave.Select();
+            DataRow[] mapRows = map.Select();
+
+            string mGUID="";
+            string sGUID="";
+            bool wasChanged = false;
+
+            //1 - Text
+            //2 - GUID
+
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                foreach (DataRow dr in mRows)
+                {
+                    string mText = dr.ItemArray[1].ToString();
+
+                    if (!mText.Equals("Additional comments", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bool eFlag = false;
+
+                        foreach (DataRow drs in sRows)
+                        {
+                            string sText = drs.ItemArray[1].ToString();
+
+                            if (sText.Equals(mText, StringComparison.OrdinalIgnoreCase))
+                            {
+                                eFlag = true;
+                                mGUID = dr.ItemArray[2].ToString();
+                                sGUID = drs.ItemArray[2].ToString();
+
+                                break;
+                            }
+                        }
+
+                        if (eFlag)
+                        {
+                            //Texts are the same
+
+                            //Check whether there is the same record in questions mapping table
+
+                            bool hasRec = false;
+
+                            foreach (DataRow mapDr in mapRows)
+                            {
+                                string m = mapDr.ItemArray[2].ToString();
+                                string s = mapDr.ItemArray[3].ToString();
+
+                                if (m.Equals(mGUID) && s.Equals(sGUID))
+                                {
+                                    hasRec = true;
+                                    break;
+                                }
+
+                            }
+
+                            if (!hasRec)
+                            {
+                                OleDbCommand cmd = new OleDbCommand("", connection);
+
+                                cmd.CommandText =
+                                    "insert into QUESTIONS_MAPPING(QUESTION_MASTER_GUID,QUESTION_SLAVE_GUID) \n" +
+                                    "values('{" + mGUID + "}','{" + sGUID + "}')";
+                                cmd.ExecuteNonQuery();
+                                wasChanged = true;
+                            }
+                        }
+                    }
+                }
+                if (wasChanged)
+                {
+                    fillMapQuestions();
+                    System.Windows.Forms.MessageBox.Show("Automatic questions mapping completed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("There are no unmapped questions", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void copyGeneralMapping()
+        {
+            //Get master code
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            cmd.CommandText =
+                "select TYPE_CODE from TEMPLATES \n" +
+                "where VERSION='" + StrToSQLStr(comboBox1.Text) + "' \n" +
+                "and TITLE='" + StrToSQLStr(comboBox2.Text) + "'";
+
+            string masterCode = (string)cmd.ExecuteScalar();
+
+            //Get slave code
+            cmd.CommandText =
+                "select TYPE_CODE from TEMPLATES \n" +
+                "where VERSION='" + StrToSQLStr(comboBox4.Text) + "' \n" +
+                "and TITLE='" + StrToSQLStr(comboBox3.Text) + "'";
+
+            string slaveCode = (string)cmd.ExecuteScalar();
+
+            if ((comboBox1.Text == comboBox4.Text) && (masterCode == slaveCode)) return;
+
+            if (slaveCode.Substring(3, 2) == "01") return;
+
+            string baseMasterCode = slaveCode.Substring(1, 2) + "01";
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            //Resfresh master list of questions
+            fillMasterVIQQuestions();
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            fillSlaveVIQQuestions();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //Map general questions
+            GeneralMapping();
+        }
+
+        private void GeneralMapping()
+        {
+            //Update general questions mapping
+            //Clear old mapping
+            OleDbCommand cmd = new OleDbCommand("", connection);
+
+            //Get list of available questionnairies for selected major version
+
+            cmd.CommandText =
+                "select TEMPLATE_GUID, TITLE, TYPE_CODE, VERSION \n"+ 
+                "from TEMPLATES \n" +
+                "where VERSION like '" + masterMajorVersion.ToString() + "' \n" +
+                "and VERSION not like '" + StrToSQLStr(comboBox1.Text) + "' \n" +
+                "and TITLE not like '" + StrToSQLStr(comboBox2.Text) + "'";
+
+            OleDbDataAdapter masterTemplates = new OleDbDataAdapter(cmd);
+
+            if (DS.Tables.Contains("MASTER_TEMPLATES"))
+                DS.Tables["MASTER_TEMPLATES"].Clear();
+
+            masterTemplates.Fill(DS, "MASTER_TEMPLATES");
+
+
+            cmd.CommandText=
+                "select TEMPLATE_GUID, TITLE, TYPE_CODE, VERSION \n" +
+                "from TEMPLATES \n" +
+                "where VERSION like '" + slaveMajorVersion.ToString() + "' \n" +
+                "and VERSION not like '" + StrToSQLStr(comboBox4.Text) + "' \n" +
+                "and TITLE not like '" + StrToSQLStr(comboBox3.Text) + "'";
+
+            OleDbDataAdapter slaveTemplates = new OleDbDataAdapter(cmd);
+
+            if (DS.Tables.Contains("SLAVE_TEMPLATES"))
+                DS.Tables["SLAVE_TEMPLATES"].Clear();
+
+            slaveTemplates.Fill(DS, "SLAVE_TEMPLATES");
+
+            //Create temporary table for mapping
+            if (tableExists("TEMP_MAPPING"))
+            {
+                //Clear table
+                cmd.CommandText =
+                    "delete from TEMP_MAPPING";
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                cmd.CommandText =
+                    "create table TEMP_MAPPING (ID Counter Primary Key, MGUID GUID, SGUID GUID)";
+
+                cmd.ExecuteNonQuery();
+            }
+
+            //Temporary table filling
+
+
+
+        }
+
+        private Boolean tableExists(string tableName)
+        {
+            DataTable Tables = connection.GetSchema("Tables");
+            DataRow[] tableRows;
+
+            tableRows = Tables.Select();
+
+
+            foreach (DataRow row in Tables.Rows)
+            {
+                if (tableName.CompareTo(Convert.ToString(row.ItemArray[2])) == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+    }
+}
