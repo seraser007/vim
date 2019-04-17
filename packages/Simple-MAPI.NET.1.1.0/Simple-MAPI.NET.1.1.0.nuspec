@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Simple-MAPI.NET</id>
+    <version>1.1.0</version>
+    <title>Simple-MAPI.NET</title>
+    <authors>Peter van der Woude</authors>
+    <owners>Peter van der Woude</owners>
+    <licenseUrl>https://github.com/PandaWood/Simple-MAPI.NET/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/PandaWood/Simple-MAPI.NET</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET wrapper around Simple MAPI - a set of functions and related data structures to add messaging functionality to Windows-based apps</description>
+    <summary>A .NET wrapper around Simple MAPI</summary>
+    <releaseNotes>fixes: 64-bit compatibility
+features: add BCC recipient</releaseNotes>
+    <language>en-US</language>
+    <tags>mapi simple-mapi</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework2.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

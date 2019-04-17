@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>ADGV</id>
+    <version>0.1.0.10</version>
+    <title>Advanced DataGridView</title>
+    <authors>zuby@me.com</authors>
+    <owners>zuby@me.com</owners>
+    <licenseUrl>http://adgv.codeplex.com/license</licenseUrl>
+    <projectUrl>http://adgv.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET WinForm DataGridView with Excel-Like auto-filter context menu</description>
+    <summary />
+    <copyright>Copyright 2014</copyright>
+    <tags>Autofilter TableFilter ExcelFilter Filter DataGridView</tags>
+  </metadata>
+</package>
