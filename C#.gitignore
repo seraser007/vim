@@ -1,0 +1,12 @@
+# Exclude .vs folder
+.vs/
+
+#Exclude .nuget folder
+.nuget/
+
+#Exclude bin folder
+**/bin/
+
+#Exclude obj folder
+**/obj/
+
